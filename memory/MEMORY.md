@@ -1,0 +1,103 @@
+- [🔧 Meta API ago/2026 — 2 erros novos ao criar adset/creative](reference_meta_api_fixes_2026_08.md) — compliance_section BR obrigatório (copiar o beneficiary do adset que já está no ar, o ID varia por campanha) + standard_enhancements descontinuado (remover degrees_of_freedom_spec); markdown vaza asterisco no feed
+- [📝 Fórmula do long-form campeão + como adaptar vídeo de concorrente](reference_longform_formula_sano.md) — 15 elementos do "Ricardo Calloway" (500+ conversões); dedupe por MIOLO (concorrente escala por hook rotation: 40 arquivos = 1 script); priorizar por dias no ar; descartar oferta/remarketing
+- [🟡 Cúrcuma oral 2-6% = argumento do creme tópico](reference_2pct_curcumina_argumento_topico.md) — defeito do produto do concorrente vira argumento do nosso ("você não falhou, a ROTA falhou"); cartilagem não tem nervo (não dói) nem vaso (nutre-se por movimento) derruba "osso com osso" e glucosamina/colágeno
+- [📑 37 long-forms Prime Total Relief (3 levas de swipe)](project_longforms_prime_total_relief.md) — pasta separada dos 40 antigos; neuropatia 6 · ciática 6 · joelho 2 · articular 25; placa ciática reproduzida do original mas SEM citar instituição real
+- [🚫 NUNCA colocar CRM em roteiro/copy](feedback_nunca_crm_em_roteiro.md) — médico personagem entra só com nome + tempo de consultório; CRM só de profissional real que assinou, número conferido no Conselho; vale também pra nota de produção (vaza, é copiada, vira roteiro)
+- [🚫 NUNCA mexer na promessa ao adaptar roteiro](feedback_nunca_mexer_na_promessa.md) — promessa e números do original passam INTACTOS (80% em 8 semanas, 22x, notas, prazos); suavizei "80%" p/ "diferença gritante" alegando que a PV prometia 70% → errado; se a PV promete menos, ajusta a PV, não o criativo
+- [🤳 Receita UGC anti-IA (selfie crua expondo melasma)](reference_ugc_melasma_anti_ia.md) — antes/depois estúdio "parece IA" e foi rejeitado; acerta com iPhone caseiro, luz feia mista, celular rachado, pele com poro/oleosidade, cenário bagunçado, emoção real; mix 4 problema+3 ba selfie+3 produto; script gen-clarilux-ugc-melasma.py
+- [🚚 Frete Loggi → planilha Yampi (origem SC)](reference_frete_loggi_yampi.md) — 1 linha/CEP real (Redespacho paga Redespacho, sem absorver prejuízo); preço=(tabela+GRIS0,45%×mult+AdV0,45%)/(1−ICMS); NF R$300; caixa 20×30×4→2 faixas peso; output 60k linhas; TO-Redespacho sem preço
+- [🖱️ Bug variant-card: clicar no card abre checkout (handler pega os cards)](feedback_variant_card_data_checkout_navega.md) — handler navegação `[data-checkout]` pega os cards; fix `:not(.variant-card)`; bug oposto no Clareia = CTA href=# até clicar (init com card active no load); FungZero/Prime usam `a[data-checkout]` (sem bug)
+- [🔗 Clonar ad Meta: trocar link no TEXTO (message), não só no botão](feedback_clonar_ad_trocar_link_no_texto.md) — copy escreve URL no corpo; trocar link_data.link + cta + message (regex fronteira `(?![\w-])`); Meta não avisa; furou Campanha B direto-PV
+- [📊 Funil→ROAS por advertorial cruzando GA4+Yampi+Meta (3 APIs)](reference_funil_roas_3_apis.md) — entradas(GA4 landingPage)+passagem(pageReferrer)+vendas(Yampi pagos status_id=3)+gasto(Meta); ponte criativo→adv via utm_content={{ad.name}}; ROAS real UTMify=1,12 (não o 1,81 do recorte); token Meta vence 60d
+- [🔗 Passagem advertorial→PV via utm_content (não duplicar PV)](reference_utm_content_passagem_advertorial.md) — botão leva ?utm_content=<slug-do-ângulo>; GA4 breakdown por "Manual content"; slug=nome do arquivo (index=pasta); live sem .html (com .html=308); testado GA4+curl. 39 adv-prime aplicados
+- [👥 Dois chats mesma pasta = deploy publica disco inteiro](feedback_dois_chats_disco_compartilhado_deploy.md) — vercel --prod empacota o disco, não diff git; risco de timing (só gaba-dor subiu, 38 ficaram pra trás); NUNCA deployar sozinho sem avisar; validar na live c/ curl depois
+- [🎯 Skill meta-ads-analyzer + subagente especialista-bidcap](reference_skill_meta_ads_analyzer_bidcap.md) — doutrina oficial Meta (Bid Cap/Cost Cap/pacing/breakdown effect) + media buyer de lances c/ contexto Sano (bids US$25/35/15); só skill sem MCP; CSV/print
+- [🌿 Meta reprova saúde como cannabis/medicamentos → ofuscar c/ ZWJ (TESTADO 15/15)](feedback_meta_cannabis_ervas_ofuscar.md) — gatilho = NOMES de ervas (cúrcuma/arnica/Ginkgo/capsaicina/MSM) OU fármacos (Gabapentina/diclofenaco/ibuprofeno); ZWJ U+200D no miolo, copy intacta; recriar creative (imutável)+DELETE rejeitado; reprova em ONDAS; scripts `_dev/reofuscar-recriar.py`+`reofuscar-um.py`
+- [🔁 Skill /pipeline-nicho (raspa→adapta→imagem→advertorial→campanha)](reference_skill_pipeline_nicho.md) — 1 comando por nicho; imagem por TIPO (resultado visual→antes/depois, dor→cena); scripts testados no Clarilux; encapsula todas as pegadinhas
+- [🦵 Campanha Gaba 20 Conjuntos (SANO_PRIME_CREME EUA 11)](project_campanha_gaba_20conjuntos.md) — 20 conj×10 ads ACTIVE; 1 conj/advertorial gaba com título+desc próprios; banco 10 imgs feed neuropatia compartilhado; DISTRIBUIR em 6 páginas p/ não estourar limite; só FB (sem IG); pixel Prime, bid US$25
+- [🌟 Campanha Clareia Premium UGC (Meta)](project_campanha_clareia_ugc.md) — conta `act_2797264153984955` "USD - Clareia Premium" (NÃO a do Clarilux 1430...); pixel nativo `966299466456560`; campanha `120250013679350053` 10 ads UGC PAUSED; script `_dev/subir-clareia-ugc.py`
+- [🎯 Campanha Clarilux Melasma (Meta EUA 11)](project_campanha_clarilux_melasma.md) — conta `act_2164352101016970` (status 3!), pixel Clarilux `2873393396348834`, campanha `120248091848900442`, 1 conj 10 ads single-image PAUSED; Meta /adimages rejeita webp (converter jpg); checkouts Yampi 199/294/394 ligados na /clarilux-v2
+- [✂️ Adaptar long-form de concorrente: NUNCA reduzir chars](feedback_adaptar_longform_nunca_reduzir.md) — tradução fiel + troca de dados (não recriar); >= chars do original sempre (expandir, nunca cortar); localizar BR; herói alheio→ativo real do produto mantendo o ângulo
+- [🕵️ Raspar Meta Ad Library de graça (DrissionPage, sem token/Apify)](reference_raspar_ad_library_drissionpage.md) — página pública sem bloqueio; truque interface pt-BR + country=US/DE/ES pega ads gringos com data legível; filtro campeão = active+image+30d; BR de melasma é só clínica local; script `_dev/adlib-dominios.py`
+- [🚨 Nubank marca CNPJ Sano como golpe no PIX](project_alerta_golpe_nubank_pix.md) — antifraude do banco (não é bug de site); recebedor CNPJ Sano na Pagar.me; resolve com Nubank empresarial + Pagar.me/Yampi (reputação da chave + soft descriptor reconhecível), nunca editando HTML
+- [🎯 Pixels Meta por produto + tracking 3 camadas](reference_pixels_meta_por_produto.md) — Prime `1289947162723962`/FungZero `2156335194912574`/Tônico `1553830736152220`; fbq HTML + CAPI sGTM + Purchase Yampi
+- [🦶 Campanha FungZero refeita (DCO→10 ads single-image)](project_campanha_fungzero_10ads.md) — conta `act_1642921946819932`, campanhas ADV `52631840973324`+PV `52631840981524` COST_CAP bid US$35, 14 conj×10=140 ads; DCO trava entrega
+- [🚀 Campanha Tônico Supremo no Meta](project_campanha_tonico_meta.md) — conta Prime Creme `act_1965476473957439`, campanha 10ADS `120248829143030379`, 28 conj×10 ads single-image (flex não gasta); fix advantage_audience:0 + compliance BR
+- [📚 Research Doc Mestre (Voice-of-Customer)](reference_research_doc_voice_of_customer.md) — 1 doc por AVATAR no Obsidian Research/, 9 seções, ângulos prontos pro pipeline; SEMPRE vários ângulos/produto. Ex Tônico masc/fem, FungZero
+- [📰 Skill /last30days (pesquisa X+Reddit+HN)](reference_last30days_skill.md) — python direto; GitHub polui, buscar EN, X via XAI_API_KEY paga; ler o raw pro verbatim
+- [🚨 NUNCA subir ad via API com site_extensions (Ligar agora)](feedback_nunca_subir_ad_com_site_extensions.md) — SEMPRE OPT_OUT; vaza cliques, derrubou margem 45%→15% em 158 ads Prime
+- [🔧 Remover site_extensions em massa via Meta API](reference_remover_site_extensions_meta_api.md) — creative imutável: recriar idêntico c/ OPT_OUT e trocar; alta conversão na mão
+- [🎬 Vídeo >90MB no Meta = upload em partes + ad exige miniatura](reference_meta_upload_video_grande.md) — upload simples devolve HTTP 413 em 0,2s (parece timeout, não é); usar upload_phase start/transfer/finish; ad de vídeo sem `image_url` falha com subcode 1443226 → pegar thumb em `/{video_id}/thumbnails`
+- [🐛 Publisher Meta: cache image_hash colide por nome + rate limit 17](reference_publisher_cache_colisao_nome.md) — cachear por path absoluto, name único; pré-upload + 1 adset/vez; LER img antes de ativar
+- [🚫 Criativo não pode mentir gênero/história do destino](feedback_criativo_nao_pode_mentir_destino.md) — LER cada criativo; banco por perfil (masc/fem/neutro)
+- [🧴 Foto "aplicando" SEMPRE com produto real na mão](feedback_foto_aplicando_produto_real.md) — i2i com foto hi-fi + "não virar jar genérico"; conferir lendo a img
+- [🚨 git push estoura HTTP 500 por mídia pesada](feedback_push_estoura_com_midia_pesada.md) — .mp4/.mov e criativos estouram; exit 0 do git mente, conferir `git ls-remote`
+- [⚠️ 404 clarilux/fungzero Vercel = case DISCO ≠ GIT](feedback_pastas_case_quebram_deploy_vercel.md) — padronizar TUDO minúsculo (disco=git); NÃO --force; build ~6min
+- [🦶 Funil FungZero pronto pra tráfego](project_funil_fungzero_pronto.md) — 5 advs por ângulo saúde; oferta Yampi 199 base qtd 1/3/5/8; pixel `2156335194912574`; garantia 180d
+- [📡 Arquitetura tracking GTM/Yampi](reference_arquitetura_tracking_gtm_yampi.md) — GTM-PNVRC5ZR; GA4/GAds só na Yampi; Purchase sempre server-side Yampi, nunca no GTM
+- [🔁 UTMify reinjeta pixel ~15x](feedback_utmify_reinjeta_pixel_loop.md) — pixel.js/latest.js re-executam fbevents em loop; tirar do HTML (não basta desativar); removido de 48 funis
+- [✅ Tracking Sano saudável — CAPI](reference_tracking_sano_saudavel_capi.md) — CAPI 87%, Purchase EMQ 9.3/10, +53% via server; sGTM sgtm.sanobrasil.com; provar de fora com DrissionPage
+- [🔒 Veo 3 Product Lock](reference_veo3_product_lock.md) — ANCHOR do rótulo no início + câmera travada; ~22 palavras/clipe; não nomear apresentador
+- [💸 Upsell WhatsApp pós-compra Sano](project_upsell_whatsapp_pos_compra.md) — Reportana; +unidades R$199 "Protocolo X Dias" + PDF por região de dor. ~R$229k/mês incremental
+- [🦵 Funil Prime Edema](reference_funil_prime_edema.md) — prime-pv-edema; Page `1044942952043640`/IG `17841419138065018`/Pixel `1289947162723962`; campanha `120245592196490442` PAUSED
+- [🧪 Campanha B12 Neuropatia (EUA 11)](project_campanha_b12_neuropatia_meta.md) — `120246701156320442` CBO bid US$25 PAUSED; 5 conj/27 ads. Fixes v23: webp→jpg, advantage_audience
+- [📊 DRE 2026](project_dre_2026.md) — Prime Gel/Gotas/Sano Kids Magnésio/ProsaFlex; aguarda custo na Yampi p/ automatizar
+- [🗺️ Yampi API — dossiê de campos](reference_yampi_api_fields_dossie.md) — `_dev/yampi-webhook/YAMPI_API_FIELDS.md`; pegadinha `price_cost` (não `cost`)
+- [🤖 Planilha Controle Tráfego puxa Meta Ads](reference_meta_ads_sync_planilha.md) — trigger noturno 4h via Graph API; câmbio Config!B7; detecção por palavra-chave
+- [⚠️ setupPlanilha() apagava Pedidos+Custos](feedback_setupplanilha_apaga_dados.md) — fixed 2026-05-19; recriar 1 aba: criarAbaConfig/recriarDashboard. NUNCA rodar setupPlanilha sem avisar
+- [🚫 Yampi `price_cost` é custo do KIT](feedback_yampi_price_cost_eh_custo_do_kit.md) — não multiplicar por Qtd Potes; col F = `=E`; col O usa custo_kit × (potes/potes_por_kit)
+- [⚠️ reliviabr.shop deploya de C:\projetos\relivia](reference_repo_reliviabr_shop.md) — funis duplicados nos 2 repos; conferir qual bate com a live antes de editar
+- [🔑 Gemini 3.1 Image via Vertex AI Express](reference_vertex_ai_setup.md) — chave `AQ.Ab8RN...` (crédito Cloud); `vertexai=True`+`api_version="v1"`; no .env
+- [🚫 NUNCA suavizar alegações EN→PT-BR](feedback_nao_suavizar_alegacoes.md) — Guilherme revisa Anvisa; suavizar cura/repara mata conversão. Cultura sim, alegação não
+- [🚫 NUNCA nerfar copy com compliance preventivo](feedback_nao_nerfar_compliance.md) — cura/trata/elimina/regenera ficam; cliente revisa depois
+- [🚫 NUNCA drop cap em advertorial](feedback_no_drop_cap_advertorial.md) — proibido `::first-letter` grande; vaza pra cards internos
+- [⚠️ Pote cabe na palma — Gemini gera GIGANTE](feedback_gemini_pote_tamanho_palma_mao.md) — SIZE_ANCHOR (cm, % frame, "casual ONE hand") em todo i2i
+- [Edição Gemini i2i preserva produto](feedback_gemini_i2i_preservar_produto.md) — input com produto hi-fi; "DO NOT redesign the product"; descrever embalagem inteira
+- [Fluxo vídeos Veo2 — autoplay](reference_workflow_videos_veo2.md) — agent veo2-video-producer; 7 cenas; CGI e pessoa SEM produto
+- [Pipeline Criativo Veo 3 — UGC](reference_pipeline_criativo_veo3.md) — 7 cenas, produto entra só cena 5; REF-A sem/REF-B com produto; ordem 5→6→1→2→3→4→7
+- [Grep global antes de sobrescrever imagem](feedback_imagem_compartilhada_entre_paginas.md) — paths podem ser usados por várias páginas; grepar todo HTML antes de regenerar
+- [Skill /criativos-manchete](reference_skill_criativos_manchete.md) — criativos FB estilo AlinhaFácil via Gemini 3.1
+- [Replix aba "Criativos Manchete"](reference_replix_criativos_manchete.md) — Replix (5004): upload HTML → briefing → N criativos AlinhaFácil
+- [Advertoriais nunca exibem preço](feedback_advertorial_no_price.md) — preço só no checkout
+- [Nunca texto escuro em fundo azul escuro](feedback_no_dark_text_on_dark_bg.md) — product-box/cta-final/footer: texto branco
+- [Guias de design Sano/Relívia](reference_design_guides.md) — ADVERTORIAL_DESIGN_GUIDE.md + PRODUCT_PAGE_DESIGN_GUIDE.md
+- [Email correto do git/deploy](feedback_git_email.md) — git usa reliviabrasil@gmail.com; outro bloqueia deploy
+- [Regras responsividade mobile](feedback_mobile_overflow_rules.md) — 4 regras CSS zero overflow (img/video max-width, grid min-width:0, body overflow-x:hidden)
+- [Domínio Sano em produção](reference_sano_dominio.md) — sanobrasil.com; checkout sano-suplementos.pay.yampi.com.br/r/{id}
+- [Vault Obsidian SANOLOGIA](reference_obsidian_vault.md) — `Desktop/SANOLOGIA OBSIDIAN/` (com espaço)
+- [Estilo A /sano-criativos = manchete científica](feedback_sano_criativos_estilo_A.md) — 3D médico macro + headline amarela; depoimento íntimo REJEITADO
+- ["Gera criativos do X" → /sano-criativos](feedback_gerar_criativos_atalho.md) — match ângulo na planilha Obsidian; sem ângulo, perguntar
+- [UTM padrão Meta Ads](reference_utm_meta_padrao.md) — campo "URL Tags" com {{campaign.name}}|{{campaign.id}}; utm_source=FB maiúsculo
+- [Pasta mestre SANO/](reference_sano_pasta_mestre.md) — 4 junctions (1-codigo/2-vault/3-criativos/4-catalogo); código usa paths reais
+- [Estrutura Sanologia/ deploy vs dev](reference_estrutura_pasta_deploy.md) — HTMLs/imgs/vídeos ao Vercel; scripts/prompts em _dev/_docs/_lixo (gitignored)
+- [Oferta padrão Sano Compre X Ganhe Y](reference_oferta_padrao_sano.md) — 1=R$149·3=R$298·6=R$447·10=R$596; fecha R$149/pote
+- [🎯 Pixel Prime Creme](reference_pixel_prime.md) — SANO-Prime `1289947162723962`
+- [Conta Meta Ads Sano (EUA 11)](reference_meta_ads_sano.md) — `act_2164352101016970` USD. Pixels: Cálcio 1480375430251129/B12 980607068056359/GlowUp 1350310353585886/Kids 955425957482281. CBO+Bid US$15+US$300/dia, BR 45-65, PAUSED
+- [Meta Ads API v21 fixes](reference_meta_ads_api_fixes_2026_05.md) — CBO sem is_adset_budget_sharing; bid_amount no ADSET; Page ads `759591800579421`
+- [Workflow avatares UGC iPhone 7](reference_workflow_avatares_ugc.md) — /gerar-avatares-ugc 15 avatares 1080x1920; comprimir produto <150KB; ancorar palma/face
+- [Chaves Gemini API](reference_chaves_gemini.md) — só `B8Vo...VN7E` (.env) tem saldo; 503 silencioso ≠ quota
+- [Replix — gerador avatares UGC](reference_replix.md) — SaaS local `_Projetos/replix/` (5004); prompts "foto caseira"; Nano Banana→2.5-flash-image
+- [Replix v2 — Page Builder Híbrido](reference_replix_v2.md) — 5 etapas + 27 slots + Auto-Imagens v2; clona PV em ~10min
+- [Browser usa DrissionPage, não Playwright](feedback_browser_automation_drission.md) — todo teste/scrape browser é DrissionPage
+- [Loop teste Replix usa fixtures](feedback_replix_dev_loop.md) — usar `Replix/projetos/*/index.html`; só rodar pipeline se mudança estrutural
+- [Replix — remover feature de ângulos](feedback_replix_remover_angulos.md) — tirar UI de ângulos; só original do briefing. Quando user pedir
+- [Yampi não permite frete por variação](feedback_yampi_frete_por_produto.md) — frete por produto; tudo ou nada
+- ["Trocar X por Y" inclui deploy](feedback_trocar_inclui_deploy.md) — trocar = edit + commit + push
+- [Link do anúncio = sempre advertorial](feedback_link_anuncio_sempre_advertorial.md) — leva pra adv-<funil>, nunca produto/checkout
+- [🎯 SOLUÇÃO compliance_section Meta API](reference_meta_compliance_section_solution.md) — adset BR: regional_regulated_categories BRAZIL_REGULATION/VOLUNTARY + regional_regulation_identities beneficiary/payer. advertiser_id **880756411607509** (Guilherme Otavio) vale no portfólio inteiro
+- [Calculadora margem Relívia](reference_calc_margem_relivia.md) — `C:\projetos\relivia\_dev\calc-margem-relivia.html`; 3 abas
+- [Yampi IDs GlowUp](reference_yampi_ids_glowup.md) — 782AV9BC54(1)·MFXOKSRDCK(3)·EKCC4RY688(6)·JH932K7CLF(10)
+- [Deploy real sanobrasil.com](reference_deploy_sano_brasil.md) — projeto Vercel `sano-brasil` (não sano-v2); git push não atualiza, usar vercel --prod
+- [Advertorial [CHECKOUT_RELIVIA] fix antes deploy](feedback_advertorial_placeholder_checkout.md) — grepar `\[CHECKOUT|\[LINK_` antes do push
+- [Imagens cross-folder quebram deploy Relívia](feedback_cross_repo_image_refs.md) — grepar `\.\./[a-z-]+/(images|assets)` antes do push
+- [Texto anúncio Sano 7-14k chars](feedback_advertorial_tamanho_caracteres.md) — long-form ad 7-14k; advertorial 15-30k; playbook 30k+. Não confundir
+- [🚨 NUNCA sobrescrever imagens compartilhadas](feedback_nunca_sobrescrever_imagens.md) — magnesio-gummies/images/ é de TODOS funis; criar cópia com sufixo
+- [🍬 B12 = "a B12 em goma da marca Sano"](feedback_citar_b12_goma_marca_sano.md) — nunca "o Sano Energy+ B12" na narrativa; nome técnico só título/rótulo
+- [💇‍♀️ Página feminina Tônico (menopausa)](project_tonico_supremo_fem.md) — /tonico-supremo-fem; copy 100% fem (estrogênio→DHT); 20 imgs mulheres 45-62; acento rosé
+- [📰 Advertoriais Tônico (4 ângulos × masc+fem)](project_advertoriais_tonico.md) — v3 finasterida/v4 descoberta/v5 xampu/v6 folículo; -fem menopausa
+- [📰 Advertoriais Clarilux + Clareia](project_advertoriais_clarilux_clareia.md) — Clarilux 4 advs (melasma); Clareia 10 advs (axila/virilha); esqueleto tentou→falhou→mecanismo
+- [🧑 Conferir gênero/idade de CADA avatar UGC](feedback_ugc_conferir_genero_publico.md) — ler cada .webp com Read antes de commitar; caso Tônico (1 mulher no carrossel masc)
+- [🎭 Consistência de personagem em advertorial](feedback_consistencia_personagem_advertorial.md) — mesmo personagem=mesmo rosto; imagem-âncora + i2i "keep face identical"
+- [📋 MANIFESTO antes de subir ad no Meta](feedback_manifesto_antes_de_subir.md) — nunca ad-hoc; manifesto local é o backup quando Meta reprova; `_dev/manifestos-prime/`
+- [📸 Before/after estilo UGC iPhone caseiro](feedback_before_after_estilo_ugc.md) — selfie caseira real, ambiente variado, produto na mão palma, 5 personas; validar cada
+- [🔗 Rota amigável quebra img relativa (curl mente)](feedback_rota_amigavel_quebra_img_relativa.md) — `/adv-x` faz o browser buscar `/images/` na RAIZ → 404 nas 23 imgs; curl no caminho da pasta dá 200 e esconde; usar src absoluto `/pasta/images/` e validar RENDERIZANDO (naturalWidth===0), não com curl
