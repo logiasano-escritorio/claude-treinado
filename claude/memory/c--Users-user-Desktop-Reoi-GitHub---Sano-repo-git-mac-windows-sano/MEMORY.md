@@ -1,0 +1,4 @@
+- [Deploy do site Sano](deploy-sano-fluxo.md) — sempre commit+push, nunca CLI; autoria do commit tem que ser logiasano-escritorio ou a Vercel bloqueia
+- [Onde trabalhar no Sano](repo-sano-onde-trabalhar.md) — qual repo, qual conta Vercel e as duas armadilhas de nome duplicado
+- [Dominios Sano divergiram](dominios-sano-divergiram.md) — RESOLVIDO 31/08: era outra CONTA Vercel, nao build velha; como diagnosticar por hash se repetir
+- [Screencapture corta silencioso](screencapture-corta-silencioso.md) — PDF de captura para em 14400pt sem avisar; medir altura antes de adaptar

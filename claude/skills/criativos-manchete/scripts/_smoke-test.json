@@ -1,0 +1,18 @@
+{
+  "produto": "Sano Cálcio (smoke test)",
+  "slug": "sano-calcio-test",
+  "output_dir": "C:\\Users\\user\\.claude\\skills\\criativos-manchete\\scripts\\_smoke-output",
+  "criativos": [
+    {
+      "id": "01",
+      "template": "A",
+      "pill": "REVELAÇÃO MÉDICA",
+      "headline_linhas": ["Osteoporose:", "9 em cada 10", "passam sem saber"],
+      "palavras_ciano": ["9 em cada 10"],
+      "subheadline": "Estudo brasileiro com 2.400 mulheres acima de 50 anos",
+      "imagem_circulo": "High-contrast MRI scan of human lumbar vertebrae showing osteoporotic bone density loss, sagittal view, black and white medical imaging, professional radiology",
+      "background": "subtle anatomical illustration of human spine in faded dark blue tones on black background",
+      "footer_brand": "SAÚDE NEWS"
+    }
+  ]
+}

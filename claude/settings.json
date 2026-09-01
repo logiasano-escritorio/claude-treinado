@@ -1,0 +1,183 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__playwright__*",
+      "TodoWrite(*)",
+      "NotebookEdit(*)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "mcp__youtube-transcript__get_transcript",
+      "Edit(~/.claude/skills/ytranscribe/**)",
+      "Edit(~/.claude/skills/transcreveryt/**)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/mgp/book-notes/master/an-elegant-puzzle.markdown\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/mgp/book-notes/master/the-mythical-man-month.markdown\")",
+      "Edit(~/.claude/skills/copy-anuncio/**)",
+      "mcp__aiox__aiox_info",
+      "mcp__aiox__aiox_workers_search",
+      "Edit(~/.claude/skills/roadmap/**)",
+      "Bash(python3 -c ':*)",
+      "Bash(cp \"C:/Users/user/.claude/commands/gerar-advertorial.md\" \"/c/Users/user/Desktop/kit-completo-claude/\")",
+      "Bash(cp \"C:/Users/user/.claude/commands/gerar-pagina-produto.md\" \"/c/Users/user/Desktop/kit-completo-claude/\")",
+      "mcp__utmify__get_dashboards",
+      "mcp__utmify__get_dashboard_summary",
+      "mcp__utmify__get_meta_ad_objects",
+      "mcp__exa__web_search_exa",
+      "mcp__aidesigner__whoami",
+      "mcp__aidesigner__get_credit_status",
+      "mcp__aidesigner__generate_design",
+      "mcp__mcp-designer__whoami",
+      "mcp__mcp-designer__get_credit_status",
+      "mcp__mcp-designer__generate_design",
+      "mcp__mcp-designer__refine_design",
+      "PowerShell(\\(Get-ItemProperty \"HKCU:\\\\Software\\\\Microsoft\\\\Windows\\\\Shell\\\\Associations\\\\UrlAssociations\\\\http\\\\UserChoice\"\\).ProgId)",
+      "PowerShell($p = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | Select-Object -First 1; if \\($p\\) { Stop-Process -Id $p.OwningProcess -Force; Write-Host \"Matou PID $\\($p.OwningProcess\\)\" } else { Write-Host \"Porta livre\" })",
+      "Read(//c/Program Files/GitHub CLI/**)",
+      "PowerShell(& cmd /c \"where gh\" 2>&1)",
+      "Read(//c/Program Files \\(x86\\)/Steam/steamapps/common/Counter-Strike Global Offensive/**)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\user\\\\Desktop\" -Directory | Where-Object { $_.Name -match 'lixo|Lixo|LIXO' } | Select-Object -ExpandProperty FullName)",
+      "PowerShell($shell = New-Object -ComObject WScript.Shell; $lnk = $shell.CreateShortcut\\(\"C:\\\\Users\\\\user\\\\OneDrive\\\\Personal Vault.lnk\"\\); $lnk.TargetPath)",
+      "PowerShell($shell = New-Object -ComObject WScript.Shell; $lnk = $shell.CreateShortcut\\(\"C:\\\\Users\\\\user\\\\OneDrive\\\\Personal Vault.lnk\"\\); Write-Output \\(\"TARGET: \" + $lnk.TargetPath\\); Write-Output \\(\"ARGS: \" + $lnk.Arguments\\); Write-Output \\(\"WORKDIR: \" + $lnk.WorkingDirectory\\))",
+      "Bash(vercel ls *)",
+      "Bash(curl -s \"https://reliviabr.shop/roncozero/roncozerocf\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5004)",
+      "PowerShell(Get-Process python -ErrorAction SilentlyContinue)",
+      "PowerShell($p = \\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess; if \\($p\\) { taskkill /F /PID $p 2>&1 | Out-Null }; Start-Sleep -Seconds 3; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 4; \"PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(taskkill /F /PID 10012 2>&1 | Out-Null; Start-Sleep -Seconds 4; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 5; \"PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5004 -ErrorAction SilentlyContinue | ForEach-Object { taskkill /F /PID $_.OwningProcess 2>&1 | Out-Null }; Start-Sleep -Seconds 5; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 5; \"PID novo: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(Stop-Process -Id 45560 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 4; \"Antes: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\"; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 6; \"Depois: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell($p = \\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess; if \\($p\\) { Stop-Process -Id $p -Force -ErrorAction SilentlyContinue }; Start-Sleep -Seconds 5; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 5; \"PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5004 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Start-Sleep -Seconds 6; \"Apos kill: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\"; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 6; \"Novo PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(taskkill /F /T /PID 54252 2>&1 | Out-Null; taskkill /F /T /PID 36372 2>&1 | Out-Null; Start-Sleep -Seconds 6; Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue | Select-Object OwningProcess; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 6; \"Final PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(Get-CimInstance Win32_Process -Filter \"Name = 'python.exe'\")",
+      "PowerShell(taskkill /F /T /PID 49812 2>&1 | Out-Null; Start-Sleep -Seconds 6; \"Apos: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\"; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; & cmd.exe /c \"start /B python -u app.py >_run.log 2>_err.log\"; Start-Sleep -Seconds 6; \"Novo: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(taskkill /F /IM python.exe 2>&1 | Out-Null; taskkill /F /IM python3.13.exe 2>&1 | Out-Null; Start-Sleep -Seconds 5; \"Apos kill total: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\"; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 6; \"Novo: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell(taskkill /F /IM python.exe 2>&1 | Out-Null; taskkill /F /IM python3.13.exe 2>&1 | Out-Null; Start-Sleep -Seconds 5; Set-Location \"c:\\\\Users\\\\user\\\\Desktop\\\\_Projetos\\\\replix\"; Start-Process -FilePath python -ArgumentList \"-u\",\"app.py\" -WindowStyle Hidden -RedirectStandardOutput \"_run.log\" -RedirectStandardError \"_err.log\"; Start-Sleep -Seconds 6; \"PID: $\\(\\(Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue\\).OwningProcess\\)\")",
+      "PowerShell($procs = Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" 2>$null; if \\($procs\\) { $procs | ForEach-Object { Write-Output \"$\\($_.ProcessId\\): $\\($_.CommandLine\\)\" } } else { Write-Output \"no python running\" })",
+      "PowerShell($r = Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue; if \\($r\\) { Stop-Process -Id $r.OwningProcess -Force; Write-Output \"killed $\\($r.OwningProcess\\)\" }; Start-Sleep -Seconds 2)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5004 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { Get-Process -Id $_ -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, StartTime })",
+      "PowerShell(Start-Sleep -Seconds 4; $listen = Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue; if \\($listen\\) { Write-Output \"OK - Flask rodando na porta 5004 \\(PID $\\($listen.OwningProcess[0]\\)\\)\" } else { Write-Output \"ERRO - nada na porta 5004 ainda\" })",
+      "PowerShell(Start-Sleep -Seconds 4; $listen = Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue; if \\($listen\\) { Write-Output \"OK - Flask rodando na porta 5004 \\(PID $\\($listen.OwningProcess[0]\\)\\)\" } else { Write-Output \"ERRO\" })",
+      "PowerShell(Start-Sleep -Seconds 4; $listen = Get-NetTCPConnection -LocalPort 5004 -State Listen -ErrorAction SilentlyContinue; if \\($listen\\) { Write-Output \"OK Flask PID $\\($listen.OwningProcess[0]\\)\" } else { Write-Output \"ERRO\" })",
+      "Bash(mkdir -p \"C:\\\\Users\\\\user\\\\.claude\\\\skills\\\\criativo-alinhafacil\\\\referencias\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\user\\\\.claude\\\\skills\\\\criativo-alinhafacil\\\\scripts\")",
+      "Bash(rm -rf \"C:\\\\Users\\\\user\\\\.claude\\\\skills\\\\criativo-alinhafacil\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\user\\\\.claude\\\\skills\\\\criativos-manchete\\\\referencias\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\user\\\\.claude\\\\skills\\\\criativos-manchete\\\\scripts\")",
+      "Edit(~/.claude/skills/criativos-manchete/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://reliviabr.shop/magnesio-constipacao/adv-1-uma-em-tres-mulheres\")",
+      "mcp__google-sheets__list_sheets",
+      "mcp__google-sheets__get_sheet_data",
+      "mcp__google-sheets__update_cells",
+      "mcp__google-sheets__batch_update_cells",
+      "mcp__google-sheets__create_sheet",
+      "Read(//c/Users/user/AppData/Local/Temp/claude/c--Users-user-Desktop-Sanologia/8b13f83f-a636-4c82-b3f0-fbd42f4421d6/tasks/**)",
+      "Read(//c/Users/user/Desktop/Sanologia/magnesio-gummies/images/ugc-carousel-sano//**)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\" \"https://reliviabr.shop/magnesio-gummies/images/ugc-carousel-sano/ugc-01.jpg\")",
+      "Bash(echo \"- [🚨 NUNCA sobrescrever imagens compartilhadas]\\(feedback_nunca_sobrescrever_imagens.md\\) — magnesio-gummies/images/ é compartilhada entre PDPs de TODOS funis; criar copia com sufixo \\(-constipacao, -ansiedade\\) e atualizar SO o HTML do funil novo\")",
+      "Read(//c/Users/user/.claude/projects/c--Users-user-Desktop-Sanologia/memory/**)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\" \"https://sanobrasil.com/magnesio-constipacao/adv-1-uma-em-tres-mulheres\")",
+      "Bash(curl -sL \"https://sanobrasil.com/magnesio-gummies/magnesio-gummies-constipacao\")",
+      "Bash(grep -oE \"R\\\\\\\\\\\\$ [0-9]+,00\")",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\" \"https://sanobrasil.com/prime-pv-varize\")",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\" \"https://sanobrasil.com/prime/images/galeria-beneficios-5-varize.png\")",
+      "Read(//c/Users/user/AppData/Local/Temp/claude/c--Users-user-Desktop-Sanologia/fdb20747-6e3b-4bbc-b294-fda0c38d69a0/tasks/**)",
+      "Bash(cp \"C:/Users/user/.claude/skills/criativos-manchete/scripts/gerar.py\" \"c:/Users/user/Desktop/Sanologia/_dev/gerar-criativos-fascite.py\" && echo \"copiado\")",
+      "Edit(~/.claude/skills/analisar-vsl/**)",
+      "Bash(cd \"C:/Users/user/.claude/skills/gerar-avatares-ugc\" && echo \"=== BASE prompt \\(DNA foto real\\) ===\" && sed -n '/## BASE/,/```$/p' personas.md 2>/dev/null | head -40)",
+      "PowerShell($k='HKLM:\\\\SYSTEM\\\\CurrentControlSet\\\\Control\\\\FileSystem'; try { $v=\\(Get-ItemProperty -Path $k -Name LongPathsEnabled -ErrorAction Stop\\).LongPathsEnabled } catch { $v='ausente' }; Write-Output \"LongPathsEnabled atual: $v\"; if \\($v -ne 1\\) { Write-Output \"tentando habilitar \\(precisa admin\\)...\"; try { Set-ItemProperty -Path $k -Name LongPathsEnabled -Value 1 -ErrorAction Stop; Write-Output \"habilitado \\(reinicia o shell pra valer\\)\" } catch { Write-Output \"SEM permissao admin pra habilitar long paths\" } })",
+      "Bash(mkdir -p ~/.claude/skills/pipeline-nicho/scripts)",
+      "Bash(cp /c/Users/user/Desktop/Sanologia/_dev/adlib-dominios.py ~/.claude/skills/pipeline-nicho/scripts/)",
+      "Bash(cp /c/Users/user/Desktop/Sanologia/_dev/adlib-longform.py ~/.claude/skills/pipeline-nicho/scripts/)",
+      "Bash(cp /c/Users/user/Desktop/Sanologia/_dev/gen-clarilux-melasma-10.py ~/.claude/skills/pipeline-nicho/scripts/gen-imagens-template.py)",
+      "Skill(artifact-design)",
+      "Skill(artifact-design:*)",
+      "mcp__claude_ai_Google_Drive__create_file",
+      "PowerShell(Write-Output \"=== CapCut instalado? onde? ===\"; Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\" -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"CapCut|capcut\" } | Select-Object FullName; Get-ChildItem \"$env:LOCALAPPDATA\" -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"CapCut\" } | Select-Object FullName; Write-Output \"=== processo rodando \\(travado\\)? ===\"; Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"CapCut|capcut\" } | Select-Object Name, Id, StartTime)",
+      "PowerShell($cc = \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\CapCut\"; Write-Output \"=== estrutura CapCut ===\"; Get-ChildItem $cc -Directory -ErrorAction SilentlyContinue | Select-Object Name, LastWriteTime; Write-Output \"\"; Write-Output \"=== pasta Apps \\(onde fica o .exe por versao\\) ===\"; Get-ChildItem \"$cc\\\\Apps\" -ErrorAction SilentlyContinue | Select-Object Name, LastWriteTime; Write-Output \"\"; Write-Output \"=== procura o executavel principal ===\"; Get-ChildItem $cc -Recurse -Filter \"CapCut.exe\" -ErrorAction SilentlyContinue | Select-Object FullName, Length, LastWriteTime | Select-Object -First 5)",
+      "PowerShell($cc = \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\CapCut\\\\Apps\"; foreach \\($v in \"8.5.0.3590\",\"8.7.0.3685\"\\) { Write-Output \"=== versao $v ===\"; $exe = Get-ChildItem \"$cc\\\\$v\" -Filter \"CapCut.exe\" -ErrorAction SilentlyContinue; if \\($exe\\) { Write-Output \\(\"  CapCut.exe: {0} bytes, {1}\" -f $exe.Length, $exe.LastWriteTime\\) } else { Write-Output \"  !!! CapCut.exe NAO EXISTE nesta versao\" }; $count = \\(Get-ChildItem \"$cc\\\\$v\" -ErrorAction SilentlyContinue | Measure-Object\\).Count; Write-Output \"  arquivos na pasta: $count\" }; Write-Output \"\"; Write-Output \"=== o launcher CapCut.exe da raiz aponta pra qual versao? \\(Configure.ini\\) ===\"; Get-Content \"$cc\\\\Configure.ini\" -ErrorAction SilentlyContinue | Select-String -Pattern \"version|Version|8\\\\.\" | Select-Object -First 5)",
+      "PowerShell($launcher = \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\CapCut\\\\Apps\\\\CapCut.exe\"; Write-Output \"abrindo CapCut...\"; Start-Process $launcher; Start-Sleep -Seconds 8; Write-Output \"=== processos CapCut ativos apos abrir ===\"; Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"CapCut\" } | Select-Object Name, Id, @{N='RAM_MB';E={[math]::Round\\($_.WorkingSet64/1MB,0\\)}})",
+      "PowerShell($src = \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\CapCut\\\\User Data\\\\Projects\"; $bkp = \"C:\\\\Users\\\\user\\\\Desktop\\\\BACKUP-CapCut-Projetos-2026-07-17\"; Write-Output \"copiando projetos pra backup no Desktop...\"; Copy-Item $src $bkp -Recurse -Force -ErrorAction SilentlyContinue; if \\(Test-Path $bkp\\) { $sz = [math]::Round\\(\\(Get-ChildItem $bkp -Recurse -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum\\).Sum/1MB,1\\); Write-Output \"OK backup em: $bkp \\($sz MB\\)\"; Get-ChildItem $bkp -Directory | Select-Object Name } else { Write-Output \"!!! backup falhou - fazer manual antes de reinstalar\" })",
+      "PowerShell(python \"C:\\\\Users\\\\user\\\\Desktop\\\\Sanologia\\\\_dev\\\\gen-variacoes-exames.py\")",
+      "PowerShell(python \"C:\\\\Users\\\\user\\\\Desktop\\\\Sanologia\\\\_dev\\\\gen-variacoes-exames.py\" 2>&1)",
+      "PowerShell(python \"C:\\\\Users\\\\user\\\\Desktop\\\\Sanologia\\\\_dev\\\\gen-variacoes-sofrimento.py\")",
+      "Read(//c/Users/user/Desktop/Sanologia/**)",
+      "Bash(tasklist)",
+      "PowerShell(Get-Process WINWORD -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process python -ErrorAction SilentlyContinue | Where-Object { $_.StartTime -gt \\(Get-Date\\).AddMinutes\\(-15\\) } | Stop-Process -Force -ErrorAction SilentlyContinue; \"processos python antigos encerrados\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\user\\Desktop",
+      "c:\\Users\\user\\Downloads\\theme_export__afarmavive-shop-theme-export-reliviaessential-online-shrine-pr__26FEB2026-0555pm\\templates",
+      "C:\\Users\\user\\.claude\\projects\\c--Users-user--claude\\memory",
+      "C:\\Users\\user\\Desktop\\relivia",
+      "C:\\Users\\user\\.claude\\$BASE\\galeria",
+      "C:\\Users\\user\\Desktop\\relivia\\vitalpulser",
+      "C:\\Users\\user\\.claude",
+      "C:\\Users\\user\\Downloads",
+      "C:\\Users\\user",
+      "C:\\Users\\user\\.claude\\plugins\\claude-stt",
+      "C:\\Users\\user\\.claude\\skills",
+      "C:\\Users\\user\\.claude\\skills\\ytranscribe",
+      "C:\\projetos\\relivia\\.claude",
+      "C:\\Users\\user\\.claude\\commands",
+      "C:\\Users\\user\\.claude\\projects\\c--Users-user-Desktop-Sanologia",
+      "C:\\Users\\user\\.claude\\skills\\criativos-manchete\\scripts",
+      "C:\\Users\\user\\.claude\\skills\\gerar-avatares-ugc"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd /c python %USERPROFILE%\\.claude\\sync-memory-to-obsidian.py"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "claude-stt@claude-stt-marketplace": true,
+    "claude-stt@jarrodwatts-claude-stt": true,
+    "vercel-plugin@vercel": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-stt-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/jarrodwatts/claude-stt.git"
+      }
+    },
+    "jarrodwatts-claude-stt": {
+      "source": {
+        "source": "github",
+        "repo": "jarrodwatts/claude-stt"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest",
+  "mcpServers": {
+    "mcp-designer": {
+      "command": "python3",
+      "args": [
+        "c:/projetos/relivia/mcp-designer/server.py"
+      ],
+      "env": {
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+      }
+    }
+  }
+}

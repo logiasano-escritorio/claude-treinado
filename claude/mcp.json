@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "command": "npx",
+      "args": ["-y", "mcp-obsidian"],
+      "env": {
+        "OBSIDIAN_API_KEY": "ff2e82f90760294abac3ead1a6d21962723089086ec04c7f98d69564af406140",
+        "OBSIDIAN_HOST": "https://127.0.0.1:27124",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
+    },
+    "meta-ads": {
+      "command": "node",
+      "args": ["c:/projetos/relivia/meta-ads-mcp/index.js"],
+      "env": {
+        "META_ACCESS_TOKEN": "<CHAVE-NO-.env-LOCAL>"
+      }
+    },
+    "utmify": {
+      "type": "sse",
+      "url": "https://mcp.utmify.com.br/mcp/?token=En3ZAOwARjTmEhvFAeteDNo6v18rqM75&resources=gs,gm,gu,gwe,ga,gp,gr,gtf,gpc,gcs"
+    }
+  }
+}

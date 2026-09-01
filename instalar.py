@@ -1,278 +1,256 @@
 # -*- coding: utf-8 -*-
 """
-Instalador do repo sano-claude-skills.
+Instalador do claude-treinado — replica o ambiente Claude Code numa maquina nova.
 
 USO
-    python3 instalar.py            instala tudo (skills + memoria)
-    python3 instalar.py --dry      mostra o que faria, sem escrever
-    python3 instalar.py --skills   so as skills
-    python3 instalar.py --memoria  so a memoria
+    python3 instalar.py              instala tudo
+    python3 instalar.py --dry        mostra o que faria, sem escrever
+    python3 instalar.py --skills     so skills/ commands/ agents/
+    python3 instalar.py --memoria    so as memorias
+    python3 instalar.py --configs    so CLAUDE.md / AGENTS_CATALOG.md / settings.json
 
-O QUE FAZ
-  1. Copia cada skill para ~/.claude/skills/<nome>/
-  2. Registra o gatilho de cada uma no ~/.claude/CLAUDE.md
-  3. Instala a memoria do projeto Sanologia em
-     ~/.claude/projects/<projeto>/memory/ traduzindo o nome da pasta
-     para o caminho DESTA maquina (o nome muda entre Windows e Mac)
+O QUE VAI PARA ONDE
+    claude/skills/    -> ~/.claude/skills/
+    claude/commands/  -> ~/.claude/commands/
+    claude/agents/    -> ~/.claude/agents/
+    claude/memory/<projeto>/ -> ~/.claude/projects/<projeto-traduzido>/memory/
+    claude/CLAUDE.md etc     -> ~/.claude/
 
-Nao sobrescreve nada sem backup. Rodar duas vezes nao duplica.
+Nada e sobrescrito sem backup com timestamp. Rodar duas vezes nao duplica.
 Windows, Mac ou Linux. Sem dependencia externa.
 """
 import io, os, re, shutil, sys, time
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(AQUI, "claude")
 BASE = os.path.join(os.path.expanduser("~"), ".claude")
+
 DRY = "--dry" in sys.argv or "--dry-run" in sys.argv
-SO_SKILLS = "--skills" in sys.argv
-SO_MEMORIA = "--memoria" in sys.argv
+FLAGS = [a for a in sys.argv[1:] if a.startswith("--") and a not in ("--dry", "--dry-run")]
+def quer(x):
+    return not FLAGS or ("--" + x) in FLAGS
 
-# nome -> descricao curta que vai pro CLAUDE.md
-DESCRICOES = {
-    "adaptar-longform":
-        "pipeline completo de adaptacao de long-form de concorrente estrangeiro",
-    "raspar-adlibrary":
-        "raspa a Meta Ad Library e vira notas no Obsidian com contagem de variacoes ativas",
-}
+IGN = shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store", "*.bak", "*.bak-*")
+CARIMBO = time.strftime("%Y%m%d-%H%M%S")
 
 
-def log(*a):
-    print(*a)
-
-
-# ------------------------------------------------------------------ skills
-def bloco_de(nome):
-    desc = DESCRICOES.get(nome, "skill " + nome)
-    return ("<!-- %s:inicio -->\n"
-            "# %s\n"
-            "- **%s** (`~/.claude/skills/%s/SKILL.md`) - %s. Trigger: `/%s`\n"
-            "When the user types `/%s`, invoke the Skill tool with "
-            '`skill: "%s"` before doing anything else.\n'
-            "<!-- %s:fim -->" % (nome, nome, nome, nome, desc, nome, nome, nome, nome))
-
-
-def instalar_skill(nome):
-    src = os.path.join(AQUI, "skills", nome)
-    dst = os.path.join(BASE, "skills", nome)
-    if not os.path.isdir(src):
-        log("   ! nao achei " + src)
-        return False
-    if DRY:
-        log("   [dry] instalaria %s -> %s" % (nome, dst))
-        return True
-    if os.path.isdir(dst):
-        bak = dst + ".bak-" + time.strftime("%Y%m%d-%H%M%S")
-        shutil.copytree(dst, bak)
-        log("   backup da versao anterior -> " + os.path.basename(bak))
-        # preserva um corpus local maior que o do repo
-        c_old = os.path.join(bak, "scripts", "corpus-fb.txt")
-        c_new = os.path.join(src, "scripts", "corpus-fb.txt")
-        guardar = None
-        if os.path.exists(c_old) and os.path.exists(c_new):
-            a = io.open(c_old, encoding="utf-8", errors="replace").read()
-            b = io.open(c_new, encoding="utf-8", errors="replace").read()
-            if len(a) > len(b):
-                guardar = a
-        shutil.rmtree(dst)
-        shutil.copytree(src, dst, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-        if guardar:
-            io.open(os.path.join(dst, "scripts", "corpus-fb.txt"),
-                    "w", encoding="utf-8").write(guardar)
-            log("   corpus-fb.txt local era maior - mantido")
+def backup(p):
+    """Copia p para p.bak-<timestamp>. Devolve o caminho do backup."""
+    b = p + ".bak-" + CARIMBO
+    if os.path.isdir(p):
+        shutil.copytree(p, b)
     else:
-        shutil.copytree(src, dst, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-    n = sum(len(f) for _, _, f in os.walk(dst))
-    log("   %-20s %d arquivos" % (nome, n))
-    return True
+        shutil.copy2(p, b)
+    return b
 
 
-def registrar_gatilhos(nomes):
-    md = os.path.join(BASE, "CLAUDE.md")
-    blocos = [bloco_de(n) for n in nomes]
-
-    if not os.path.exists(md):
-        if DRY:
-            log("   [dry] criaria o CLAUDE.md com %d gatilhos" % len(blocos))
-            return
-        os.makedirs(BASE, exist_ok=True)
-        io.open(md, "w", encoding="utf-8").write("\n\n".join(blocos) + "\n")
-        log("   CLAUDE.md criado com %d gatilhos" % len(blocos))
+# --------------------------------------------------------------- pastas
+def instalar_pasta(nome):
+    src = os.path.join(SRC, nome)
+    dst = os.path.join(BASE, nome)
+    if not os.path.isdir(src):
         return
-
-    txt = io.open(md, encoding="utf-8", errors="replace").read()
-    original = txt
-    novos, atualizados, mantidos = [], [], []
-
-    for nome, bloco in zip(nomes, blocos):
-        ini, fim = "<!-- %s:inicio -->" % nome, "<!-- %s:fim -->" % nome
-        if ini in txt and fim in txt:
-            atual = txt[txt.index(ini):txt.index(fim) + len(fim)]
-            if atual.strip() == bloco.strip():
-                mantidos.append(nome)
-            else:
-                txt = txt.replace(atual, bloco)
-                atualizados.append(nome)
-        elif ('skill: "%s"' % nome) in txt:
-            mantidos.append(nome + " (registrado a mao, nao mexi)")
-        else:
-            sep = "" if txt.endswith("\n\n") else ("\n" if txt.endswith("\n") else "\n\n")
-            txt = txt + sep + bloco + "\n"
-            novos.append(nome)
-
+    n = sum(len(f) for _, _, f in os.walk(src))
     if DRY:
-        log("   [dry] CLAUDE.md: %d novos, %d atualizados, %d ja ok"
-            % (len(novos), len(atualizados), len(mantidos)))
+        print("   [dry] %-10s %d arquivos -> %s" % (nome, n, dst))
         return
-    if txt != original:
-        shutil.copy2(md, md + ".bak-" + time.strftime("%Y%m%d-%H%M%S"))
-        io.open(md, "w", encoding="utf-8").write(txt)
-    for n in novos:
-        log("   + gatilho: " + n)
-    for n in atualizados:
-        log("   ~ atualizado: " + n)
-    for n in mantidos:
-        log("   = ja estava ok: " + n)
+    if os.path.isdir(dst):
+        # preserva o que existe na maquina e nao vem no repo
+        b = backup(dst)
+        print("   backup: %s" % os.path.basename(b))
+        for root, dirs, files in os.walk(src):
+            rel = os.path.relpath(root, src)
+            alvo = os.path.join(dst, rel) if rel != "." else dst
+            os.makedirs(alvo, exist_ok=True)
+            for f in files:
+                if f.endswith((".pyc",)) or f == ".DS_Store":
+                    continue
+                shutil.copy2(os.path.join(root, f), os.path.join(alvo, f))
+    else:
+        shutil.copytree(src, dst, ignore=IGN)
+    print("   %-10s %d arquivos" % (nome, n))
 
 
-# ----------------------------------------------------------------- memoria
-def achar_pasta_memoria():
+# --------------------------------------------------------------- configs
+def instalar_configs():
+    for f in ["CLAUDE.md", "AGENTS_CATALOG.md", "settings.json", "mcp.json"]:
+        src = os.path.join(SRC, f)
+        if not os.path.isfile(src):
+            continue
+        dst = os.path.join(BASE, f)
+        if DRY:
+            existe = " (ja existe, faria backup)" if os.path.exists(dst) else ""
+            print("   [dry] %s%s" % (f, existe))
+            continue
+        os.makedirs(BASE, exist_ok=True)
+        if os.path.exists(dst):
+            atual = io.open(dst, encoding="utf-8", errors="replace").read()
+            novo = io.open(src, encoding="utf-8", errors="replace").read()
+            if atual.strip() == novo.strip():
+                print("   = %s ja identico" % f)
+                continue
+            backup(dst)
+            print("   ~ %s atualizado (backup ao lado)" % f)
+        else:
+            print("   + %s" % f)
+        shutil.copy2(src, dst)
+
+
+# --------------------------------------------------------------- memoria
+def traduzir_projeto(nome_original):
     """
-    O Claude Code nomeia a pasta pelo caminho do projeto, e esse caminho muda
-    entre maquinas. Descobre o nome correto NESTA maquina.
+    O Claude Code nomeia a pasta pelo caminho do projeto, entao o nome muda
+    entre maquinas. Descobre o equivalente NESTA maquina.
     """
     proj = os.path.join(BASE, "projects")
+    # sufixo significativo: "...-desktop-sanologia" -> "sanologia"
+    cauda = re.split(r"[-_]", nome_original.lower())
+    cauda = [c for c in cauda if c and c not in
+             ("c", "users", "user", "desktop", "documents", "home", "projetos")]
+    alvo = "-".join(cauda[-2:]) if len(cauda) >= 2 else (cauda[-1] if cauda else "")
+
     if os.path.isdir(proj):
         for d in sorted(os.listdir(proj)):
-            if d.lower().endswith("sanologia"):
+            dl = d.lower()
+            if alvo and dl.endswith(alvo):
                 return os.path.join(proj, d, "memory"), d
+            if cauda and dl.endswith(cauda[-1]):
+                return os.path.join(proj, d, "memory"), d
+    # nao existe ainda: deriva do caminho real, se a pasta do projeto existir
     home = os.path.expanduser("~")
-    for cand in [os.path.join(home, "Desktop", "Sanologia"),
-                 os.path.join(home, "Sanologia"),
-                 os.path.join(home, "Documents", "Sanologia")]:
-        if os.path.isdir(cand):
-            slug = cand.replace(":", "-").replace(os.sep, "-").replace("/", "-").lower()
-            return os.path.join(proj, slug, "memory"), slug
-    cand = os.path.join(home, "Desktop", "Sanologia")
-    slug = cand.replace(":", "-").replace(os.sep, "-").replace("/", "-").lower()
-    return os.path.join(proj, slug, "memory"), slug
+    if cauda:
+        for raiz in [os.path.join(home, "Desktop"), home, os.path.join(home, "Documents")]:
+            if not os.path.isdir(raiz):
+                continue
+            for x in os.listdir(raiz):
+                if x.lower() == cauda[-1]:
+                    p = os.path.join(raiz, x)
+                    slug = p.replace(":", "-").replace(os.sep, "-").replace("/", "-").lower()
+                    return os.path.join(proj, slug, "memory"), slug
+    return os.path.join(proj, nome_original, "memory"), nome_original + " (nome original)"
+
+
+def mesclar_indice(idx, novo_idx):
+    """MEMORY.md e mesclado linha a linha: memoria local nunca some."""
+    atual = io.open(idx, encoding="utf-8", errors="replace").read()
+    backup(idx)
+    linhas = [l.rstrip() for l in atual.split("\n")]
+    tem = set(m.group(1) for m in
+              (re.search(r"\(([^)]+\.md)\)", l) for l in linhas) if m)
+    add = [l.rstrip() for l in novo_idx.split("\n")
+           if re.search(r"\(([^)]+\.md)\)", l)
+           and re.search(r"\(([^)]+\.md)\)", l).group(1) not in tem]
+    if add:
+        io.open(idx, "w", encoding="utf-8").write(
+            "\n".join(linhas + [""] + add).strip() + "\n")
+    return len(add)
 
 
 def instalar_memoria():
-    src = os.path.join(AQUI, "memory")
-    if not os.path.isdir(src):
-        log("   ! pasta memory/ nao encontrada no repo")
+    raiz = os.path.join(SRC, "memory")
+    if not os.path.isdir(raiz):
         return
-    destino, slug = achar_pasta_memoria()
-    arquivos = sorted(f for f in os.listdir(src) if f.endswith(".md"))
-    ja = set()
-    if os.path.isdir(destino):
-        ja = set(f for f in os.listdir(destino) if f.endswith(".md"))
+    for p in sorted(os.listdir(raiz)):
+        origem = os.path.join(raiz, p)
+        if not os.path.isdir(origem):
+            continue
+        arqs = sorted(f for f in os.listdir(origem) if f.endswith(".md"))
+        if not arqs:
+            continue
+        destino, slug = traduzir_projeto(p)
+        ja = set(f for f in os.listdir(destino)
+                 if f.endswith(".md")) if os.path.isdir(destino) else set()
+        novos = [f for f in arqs if f not in ja and f != "MEMORY.md"]
+        conf = [f for f in arqs if f in ja and f != "MEMORY.md"]
 
-    novos = [f for f in arquivos if f not in ja and f != "MEMORY.md"]
-    conf = [f for f in arquivos if f in ja and f != "MEMORY.md"]
+        print("   %s" % slug)
+        print("      %d no repo | %d ja la | %d novas | %d sobrescritas"
+              % (len(arqs), len(ja), len(novos), len(conf)))
+        if DRY:
+            continue
 
-    log("   projeto: " + slug)
-    log("   destino: " + destino)
-    log("   %d no repo | %d ja existem | %d novas | %d sobrescritas (com backup)"
-        % (len(arquivos), len(ja), len(novos), len(conf)))
+        os.makedirs(destino, exist_ok=True)
+        if conf:
+            b = destino + ".bak-" + CARIMBO
+            os.makedirs(b, exist_ok=True)
+            for f in conf:
+                shutil.copy2(os.path.join(destino, f), os.path.join(b, f))
+        for f in arqs:
+            if f != "MEMORY.md":
+                shutil.copy2(os.path.join(origem, f), os.path.join(destino, f))
 
-    if DRY:
-        log("   [dry] nada escrito")
-        return
-
-    os.makedirs(destino, exist_ok=True)
-    if conf:
-        bak = destino + ".bak-" + time.strftime("%Y%m%d-%H%M%S")
-        os.makedirs(bak, exist_ok=True)
-        for f in conf:
-            shutil.copy2(os.path.join(destino, f), os.path.join(bak, f))
-        log("   backup das %d anteriores -> %s" % (len(conf), os.path.basename(bak)))
-
-    for f in arquivos:
-        if f != "MEMORY.md":
-            shutil.copy2(os.path.join(src, f), os.path.join(destino, f))
-
-    # o indice e MESCLADO, nunca sobrescrito
-    idx = os.path.join(destino, "MEMORY.md")
-    novo_idx = ""
-    if os.path.exists(os.path.join(src, "MEMORY.md")):
-        novo_idx = io.open(os.path.join(src, "MEMORY.md"),
-                           encoding="utf-8", errors="replace").read()
-    if os.path.exists(idx):
-        atual = io.open(idx, encoding="utf-8", errors="replace").read()
-        shutil.copy2(idx, idx + ".bak-" + time.strftime("%Y%m%d-%H%M%S"))
-        linhas = [l.rstrip() for l in atual.split("\n")]
-        tem = set(m.group(1) for m in
-                  (re.search(r"\(([^)]+\.md)\)", l) for l in linhas) if m)
-        add = []
-        for l in novo_idx.split("\n"):
-            m = re.search(r"\(([^)]+\.md)\)", l)
-            if m and m.group(1) not in tem:
-                add.append(l.rstrip())
-        if add:
-            io.open(idx, "w", encoding="utf-8").write(
-                "\n".join(linhas + [""] + add).strip() + "\n")
-            log("   MEMORY.md: %d linhas novas mescladas" % len(add))
-        else:
-            log("   MEMORY.md: nada novo a mesclar")
-    elif novo_idx:
-        io.open(idx, "w", encoding="utf-8").write(novo_idx)
-        log("   MEMORY.md criado")
-
-    log("   OK: %d memorias em %s"
-        % (len([f for f in os.listdir(destino) if f.endswith(".md")]), destino))
+        idx = os.path.join(destino, "MEMORY.md")
+        src_idx = os.path.join(origem, "MEMORY.md")
+        if os.path.exists(src_idx):
+            novo_idx = io.open(src_idx, encoding="utf-8", errors="replace").read()
+            if os.path.exists(idx):
+                n = mesclar_indice(idx, novo_idx)
+                print("      MEMORY.md: %d linhas mescladas" % n)
+            else:
+                io.open(idx, "w", encoding="utf-8").write(novo_idx)
+                print("      MEMORY.md criado")
 
 
-# -------------------------------------------------------------------- main
+# ------------------------------------------------------------------ main
 def main():
+    if not os.path.isdir(SRC):
+        print("ERRO: nao achei a pasta claude/ ao lado do instalador.")
+        print("Rode de dentro do repo clonado.")
+        sys.exit(1)
+
     if DRY:
-        log(">>> DRY RUN - nada sera escrito\n")
+        print(">>> DRY RUN - nada sera escrito\n")
 
-    skills = []
-    d = os.path.join(AQUI, "skills")
-    if os.path.isdir(d):
-        skills = sorted(x for x in os.listdir(d)
-                        if os.path.isfile(os.path.join(d, x, "SKILL.md")))
+    if quer("skills"):
+        print("SKILLS, COMMANDS E AGENTES")
+        for d in ["skills", "commands", "agents"]:
+            instalar_pasta(d)
+        print("")
 
-    if not SO_MEMORIA and skills:
-        log("SKILLS")
-        for s in skills:
-            instalar_skill(s)
-        log("")
-        log("GATILHOS no CLAUDE.md")
-        registrar_gatilhos(skills)
-        log("")
+    if quer("configs"):
+        print("CONFIGURACOES")
+        instalar_configs()
+        print("")
 
-    if not SO_SKILLS:
-        log("MEMORIA (projeto Sanologia)")
+    if quer("memoria"):
+        print("MEMORIAS")
         instalar_memoria()
-        log("")
+        print("")
 
     if DRY:
-        log("[dry] rode sem --dry pra aplicar.")
+        print("[dry] rode sem --dry pra aplicar.")
         return
 
-    log("-" * 60)
-    log("CONFERINDO")
-    log("-" * 60)
+    print("-" * 62)
+    print("CONFERINDO")
+    print("-" * 62)
     ok = True
-    for s in skills:
-        p = os.path.join(BASE, "skills", s, "SKILL.md")
-        log(("  OK   " if os.path.exists(p) else "  FALHA  ") + s)
-        ok = ok and os.path.exists(p)
-    md = os.path.join(BASE, "CLAUDE.md")
-    t = io.open(md, encoding="utf-8", errors="replace").read() if os.path.exists(md) else ""
-    for s in skills:
-        g = ('skill: "%s"' % s) in t
-        log(("  OK   " if g else "  FALHA  ") + "gatilho " + s)
-        ok = ok and g
-    log("")
-    log("Tudo pronto. Reinicie o Claude Code." if ok else "Algo falhou acima.")
-    if skills:
-        log("Skills: " + "  ".join("/" + s for s in skills))
-    log("")
-    log("Dependencias (so quando for usar cada uma):")
-    log("   pip3 install DrissionPage                        # /raspar-adlibrary")
-    log("   pip3 install google-genai pillow python-dotenv   # /adaptar-longform (imagens)")
+    for d in ["skills", "commands", "agents"]:
+        p = os.path.join(BASE, d)
+        n = sum(len(f) for _, _, f in os.walk(p)) if os.path.isdir(p) else 0
+        print("  %-8s %s %d arquivos" % (d, "OK  " if n else "FALHA", n))
+        ok = ok and bool(n)
+    for f in ["CLAUDE.md", "AGENTS_CATALOG.md"]:
+        e = os.path.exists(os.path.join(BASE, f))
+        print("  %-8s %s %s" % ("config", "OK  " if e else "FALHA", f))
+        ok = ok and e
+    proj = os.path.join(BASE, "projects")
+    tot = 0
+    if os.path.isdir(proj):
+        for d in os.listdir(proj):
+            m = os.path.join(proj, d, "memory")
+            if os.path.isdir(m):
+                tot += len([f for f in os.listdir(m) if f.endswith(".md")])
+    print("  %-8s %s %d memorias" % ("memory", "OK  " if tot else "FALHA", tot))
+
+    print("")
+    print("Tudo pronto. Reinicie o Claude Code." if ok else "Algo falhou acima.")
+    print("")
+    print("Dependencias (so quando for usar cada skill):")
+    print("   pip3 install DrissionPage                        # /raspar-adlibrary")
+    print("   pip3 install google-genai pillow python-dotenv   # imagens")
+    print("")
+    print("As chaves de API NAO vem no repo. Crie o .env local quando alguma skill pedir.")
 
 
 if __name__ == "__main__":

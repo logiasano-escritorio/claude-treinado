@@ -1,7 +1,7 @@
 # claude-treinado
 
-Skills do Claude Code + memória de trabalho do projeto Sanologia.
-Um `git pull` mantém todas as máquinas iguais.
+O ambiente Claude Code inteiro — skills, slash commands, agentes, configuração e
+memória de trabalho. Um `git pull` mantém todas as máquinas iguais.
 
 ## Instalar
 
@@ -13,44 +13,52 @@ python3 instalar.py
 
 Reinicie o Claude Code. Pronto.
 
-Ver o que ele faria sem escrever nada:
+Ver o que faria sem escrever nada:
 
 ```bash
 python3 instalar.py --dry
 ```
 
-Instalar só uma parte: `--skills` ou `--memoria`.
+Instalar só uma parte: `--skills`, `--memoria` ou `--configs`.
 
 ## O que vai instalado
 
-| O quê | Vai para | Conteúdo |
+| Origem no repo | Destino | Conteúdo |
 |---|---|---|
-| `skills/` | `~/.claude/skills/<nome>/` | 2 skills |
-| gatilhos | `~/.claude/CLAUDE.md` | as linhas que fazem `/comando` disparar |
-| `memory/` | `~/.claude/projects/<projeto>/memory/` | 106 memórias do Sanologia |
+| `claude/skills/` | `~/.claude/skills/` | 13 skills |
+| `claude/commands/` | `~/.claude/commands/` | 67 slash commands |
+| `claude/agents/` | `~/.claude/agents/` | 163 agentes |
+| `claude/memory/<projeto>/` | `~/.claude/projects/<projeto>/memory/` | 177 memórias, 6 projetos |
+| `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | auto-routing de agentes |
+| `claude/AGENTS_CATALOG.md` | `~/.claude/` | mapa tópico → agente |
+| `claude/settings.json` | `~/.claude/` | hooks e permissões |
+| `claude/mcp.json` | `~/.claude/` | servidores MCP |
 
-### As skills
+### As 13 skills
 
-**`/raspar-adlibrary`** — raspa a Meta Ad Library pública de um concorrente
-(sem token, sem login, via DrissionPage) e escreve no vault o índice + uma nota
-por long-form único. O campo que importa é `variacoes_ativas`: quantas cópias do
-mesmo texto estão rodando ao mesmo tempo — o proxy mais honesto de aposta do
-concorrente.
+`adaptar-longform` · `raspar-adlibrary` · `pipeline-nicho` · `criativos-manchete`
+`gerar-avatares-ugc` · `meta-ads-analyzer` · `copy-anuncio` · `analisar-vsl`
+`debriefing-longform` · `sano-pagina-v2` · `transcreveryt` · `graphify` · `roadmap`
 
-**`/adaptar-longform`** — pega um long-form raspado e adapta pro produto:
-briefing de 7 blocos, as 42 regras, português orgânico brasileiro, nota no
-Obsidian com auditoria, e imagens stop-scroll extraídas das cenas do próprio texto.
+Duas se encaixam e vale saber a ordem: **`/raspar-adlibrary`** raspa a Meta Ad
+Library de um concorrente e produz as notas de benchmarking com `variacoes_ativas`
+(quantas cópias do mesmo texto ele está rodando — o proxy de aposta).
+**`/adaptar-longform`** consome essas notas e adapta a peça pro produto.
 
-**A ordem importa:** raspar produz o que adaptar consome.
+### Os slash commands
+
+67 itens, incluindo os squads: `copy-master` (33 copywriters), `traffic-masters`,
+`design-squad`, `brand-squad`, `hormozi-squad`, `storytelling`, `cybersecurity`,
+`advisory-board`, além dos utilitários de `deploy/`, `dev/`, `test/`, `docs/`.
 
 ### A memória
 
-Não é uma skill — é o histórico de trabalho. O que já deu errado, o que nunca
-fazer, como cada API se comporta, quais IDs pertencem a quê. É o que faz o Claude
-"já saber" em vez de descobrir tudo de novo. O modelo é o mesmo em toda máquina;
-o que muda é o contexto acumulado.
+Não é skill — é o histórico de trabalho. O que já deu errado, o que nunca fazer,
+como cada API se comporta, quais IDs pertencem a quê. É o que faz o Claude "já
+saber" em vez de descobrir de novo. O modelo é o mesmo em toda máquina; o que
+muda é o contexto acumulado.
 
-Amostra:
+Amostra do projeto Sanologia:
 
 - Meta reprova saúde como cannabis → ofuscar nome de erva com ZWJ (testado 15/15)
 - NUNCA subir ad com `site_extensions` — derrubou margem de 45% p/ 15% em 158 ads
@@ -58,57 +66,70 @@ Amostra:
 - Vídeo >90MB dá HTTP 413 em 0,2s (parece timeout, não é) → upload em partes
 - Ao adaptar long-form: nunca reduzir caracteres, nunca mexer na promessa
 
+## O que NÃO vem no repo
+
+De propósito, pra não carregar 1,2 GB de lixo:
+
+- `projects/` — 612 MB de transcrição de sessão (só as memórias vêm)
+- `plugins/` — 574 MB, reinstala sozinho
+- `file-history/`, `shell-snapshots/`, `cache/`, `sessions/`, logs
+- `.credentials.json` e qualquer `.env`
+
+Resultado: **18 MB** em vez de 1,2 GB, sem perder nada que importe.
+
 ## Segurança
 
-**Sem credenciais no repo.** As memórias que citavam chave entram com o valor
-substituído por `<CHAVE-NO-.env-LOCAL>` — o texto útil fica (como testar uma
-chave, formato `AIzaSy` vs `AQ.`, reset do free tier), o segredo não.
+**Sem credenciais.** Toda chave encontrada virou `<CHAVE-NO-.env-LOCAL>` — o texto
+útil em volta fica (como testar uma chave, formato `AIzaSy` vs `AQ.`, reset do free
+tier), o segredo não. As chaves de verdade seguem no `.env` de cada máquina.
 
-As chaves de verdade continuam no `.env` de cada máquina.
+Quando uma skill precisar de chave, ela para com uma mensagem dizendo qual é e
+onde colocar. Exemplo, no Mac:
 
-Ainda assim, **mantenha este repo privado**: ele carrega IDs de conta Meta,
-pixels, domínios monitorados e a estratégia do negócio.
+```bash
+mkdir -p ~/Desktop/Sanologia
+echo 'GEMINI_IMAGE_API_KEY=AIzaSy...' >> ~/Desktop/Sanologia/.env
+```
+
+Ainda assim, **mantenha o repo privado**: ele carrega IDs de conta Meta, pixels,
+domínios monitorados e a estratégia do negócio.
 
 ## Não destrói nada
 
-- Backup com timestamp antes de sobrescrever qualquer coisa
+- Backup com timestamp antes de sobrescrever qualquer pasta ou arquivo
 - Rodar duas vezes não duplica
-- `CLAUDE.md`: cada skill escreve seu bloco marcado; o que já existe é preservado
-- `MEMORY.md`: mesclado linha a linha — memória local da máquina não some
+- Skills, commands e agentes que só existem na máquina local **são preservados** —
+  o repo adiciona e atualiza, não substitui a pasta inteira
+- `MEMORY.md` é mesclado linha a linha: memória local nunca some
 - `corpus-fb.txt`: se o local for maior que o do repo, o local fica
+
+## Memória e nome de pasta
+
+O Claude Code nomeia a pasta de memória pelo **caminho do projeto**, então o nome
+muda entre Windows e Mac (`c--Users-user-Desktop-Sanologia` vira
+`-Users-<voce>-Desktop-Sanologia`). O instalador detecta o equivalente local e
+traduz. Projetos que não existem na máquina nova ficam com o nome original — a
+memória entra e passa a valer quando você criar a pasta do projeto.
 
 ## Dependências
 
-Só na hora de usar cada uma:
+Só na hora de usar cada skill:
 
 ```bash
 pip3 install DrissionPage                        # /raspar-adlibrary
-pip3 install google-genai pillow python-dotenv   # /adaptar-longform (só imagens)
+pip3 install google-genai pillow python-dotenv   # skills que geram imagem
 ```
 
-O `/raspar-adlibrary` abre um Chrome real (precisa ter Chrome instalado) e leva
-15-30 min numa coleta grande. A adaptação de copy roda sem instalar nada.
-
-## Caminhos que as skills esperam
-
-Ambas leem e escrevem no vault Obsidian `SANOLOGIA - REMOTO`, que elas detectam
-sozinhas. Pra forçar: `SANO_VAULT=/caminho/do/vault`.
-
-| Etapa | Precisa de |
-|---|---|
-| raspar → salva em | `Produtos/<Produto>/Benchmarking/<anunciante>/` |
-| adaptar → lê de | o índice e as notas geradas acima |
-| adaptar → português | `REGRAS-PORTUGUES-ORGANICO.md` na raiz do vault |
-| adaptar → salva em | `Produtos/Magnésio/Adaptacoes prontas pra subir/Adaptacoes-Externas/` |
+O `/raspar-adlibrary` abre um Chrome real (precisa ter Chrome) e leva 15-30 min
+numa coleta grande.
 
 ## Atualizar
 
-Quem mexer numa skill commita aqui. Nas outras máquinas:
+Quem mexer em algo commita aqui. Nas outras máquinas:
 
 ```bash
 git pull && python3 instalar.py
 ```
 
-Pra levar memória nova, copie os `.md` de
-`~/.claude/projects/<projeto>/memory/` para `memory/` antes de commitar —
-lembrando de tirar qualquer chave que tenha entrado.
+Pra levar mudanças da sua máquina de volta pro repo, copie de `~/.claude/` para
+`claude/` — conferindo que nenhuma chave entrou junto.

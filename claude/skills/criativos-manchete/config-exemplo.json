@@ -1,0 +1,40 @@
+{
+  "produto": "Sano Cálcio",
+  "slug": "sano-calcio",
+  "output_dir": "C:\\Users\\user\\Desktop\\criativos-manchete\\sano-calcio-EXEMPLO",
+  "criativos": [
+    {
+      "id": "01",
+      "template": "A",
+      "pill": "REVELAÇÃO MÉDICA",
+      "headline_linhas": ["Osteoporose:", "9 em cada 10", "passam sem saber"],
+      "palavras_ciano": ["9 em cada 10"],
+      "subheadline": "Estudo brasileiro com 2.400 mulheres acima de 50",
+      "imagem_circulo": "High-contrast MRI scan of human lumbar vertebrae showing osteoporotic bone density loss, sagittal view, black and white medical imaging, professional radiology",
+      "background": "subtle anatomical illustration of human spine in faded dark blue tones on black background",
+      "footer_brand": "SAÚDE NEWS"
+    },
+    {
+      "id": "02",
+      "template": "B",
+      "pill": "INVESTIGAÇÃO",
+      "headline_linhas": ["POR QUE", "TANTOS MÉDICOS,", "INDICAM SUPLEMENTO", "ERRADO PARA OSSOS"],
+      "palavras_ciano": ["INDICAM SUPLEMENTO", "ERRADO"],
+      "subheadline": "Geriatra com 22 anos de clínica quebra o silêncio sobre o cálcio carbonato.",
+      "imagem_circulo": "Doctor in scrubs holding an X-ray of a fractured hip, intense lighting, hospital setting, dramatic",
+      "background": "blurred dark hospital surgical room with operating lights",
+      "footer_brand": "INVESTIGAÇÃO NEWS"
+    },
+    {
+      "id": "03",
+      "template": "C",
+      "pill": "URGENTE",
+      "headline_linhas": ["Dor nas costas", "que não passa,", "NÃO É IDADE,", "é falta de", "absorção."],
+      "palavras_ciano": ["NÃO É IDADE"],
+      "subheadline": "Entenda por que 87% das mulheres tomam o cálcio errado.",
+      "imagem_circulo": "Close-up of elderly woman's hand on lower back showing pain, hot red glow at lower spine area indicating pain",
+      "background": "elderly Brazilian woman silhouetted bending in pain, kitchen background blurred and darkened",
+      "footer_brand": "CALDO NEWS"
+    }
+  ]
+}
