@@ -1,0 +1,6 @@
+- [Conta Meta Prime Creme](conta-meta-prime-creme.md) — act_1965476473957439 e o padrão 1-1-1 de subida de criativo
+- [Conta Meta FungZero / Magnésio](conta-meta-fungzero-magnesio.md) — act_1642921946819932, config do magnésio bisglicinato e armadilhas de vídeo pesado
+- [Estrutura Bid Cap Magnésio EUA 11](estrutura-bidcap-magnesio-eua11.md) — CBO $24k/dia com bid no adset e a escada de bid $25→$41 por ângulo
+- [Filtro de spend no Insights corrompe ranking](insights-meta-filtro-spend-por-linha.md) — nunca filtrar spend na API; agregar por criativo primeiro
+- [Copiar criativo entre contas Meta](meta-copiar-criativo-entre-contas.md) — imagem via copy_from, vídeo por referência ao video_id
+- [Bugs do publisher Meta (ago/2026)](feedback_meta_publisher_bugs_2026_08.md) — budget sharing obrigatório, age_min com Advantage, upload por arquivo

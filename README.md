@@ -25,20 +25,28 @@ Instalar só uma parte: `--skills`, `--memoria` ou `--configs`.
 
 | Origem no repo | Destino | Conteúdo |
 |---|---|---|
-| `claude/skills/` | `~/.claude/skills/` | 13 skills |
+| `claude/skills/` | `~/.claude/skills/` | 14 skills |
 | `claude/commands/` | `~/.claude/commands/` | 67 slash commands |
 | `claude/agents/` | `~/.claude/agents/` | 163 agentes |
-| `claude/memory/<projeto>/` | `~/.claude/projects/<projeto>/memory/` | 177 memórias, 6 projetos |
+| `claude/memory/<projeto>/` | `~/.claude/projects/<projeto>/memory/` | 184 memórias, 7 projetos |
 | `claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | auto-routing de agentes |
 | `claude/AGENTS_CATALOG.md` | `~/.claude/` | mapa tópico → agente |
 | `claude/settings.json` | `~/.claude/` | hooks e permissões |
 | `claude/mcp.json` | `~/.claude/` | servidores MCP |
 
-### As 13 skills
+### As 14 skills
 
-`adaptar-longform` · `raspar-adlibrary` · `pipeline-nicho` · `criativos-manchete`
-`gerar-avatares-ugc` · `meta-ads-analyzer` · `copy-anuncio` · `analisar-vsl`
-`debriefing-longform` · `sano-pagina-v2` · `transcreveryt` · `graphify` · `roadmap`
+`subir-campanha-meta` · `adaptar-longform` · `raspar-adlibrary` · `pipeline-nicho`
+`criativos-manchete` · `gerar-avatares-ugc` · `meta-ads-analyzer` · `copy-anuncio`
+`analisar-vsl` · `debriefing-longform` · `sano-pagina-v2` · `transcreveryt`
+`graphify` · `roadmap`
+
+**`/subir-campanha-meta`** é a que sobe anúncio de verdade na conta. Traz o
+publisher genérico dirigido por manifesto (idempotente por nome de campanha),
+o manifesto de exemplo com os 82 aprimoramentos automáticos em OPT_OUT, e
+`REFERENCIA-API-META.md` — o catálogo de erros da Graph API com o fix validado
+em produção, as contas, os pixels e os advertiser IDs. Quem for subir campanha
+lê essa referência antes de escrever código.
 
 Duas se encaixam e vale saber a ordem: **`/raspar-adlibrary`** raspa a Meta Ad
 Library de um concorrente e produz as notas de benchmarking com `variacoes_ativas`
@@ -90,6 +98,16 @@ onde colocar. Exemplo, no Mac:
 mkdir -p ~/Desktop/Sanologia
 echo 'GEMINI_IMAGE_API_KEY=AIzaSy...' >> ~/Desktop/Sanologia/.env
 ```
+
+Pra subir campanha no Meta, o token vai no ambiente (nunca no repo). Gere no
+Graph API Explorer com permissão `ads_management`:
+
+```bash
+export META_ACCESS_TOKEN='EAAG...'
+```
+
+Token de usuário expira rápido, às vezes em 2-3 horas de trabalho pesado; o de
+longa duração vence em torno de 60 dias. Quando der `code 190`, é isso.
 
 Ainda assim, **mantenha o repo privado**: ele carrega IDs de conta Meta, pixels,
 domínios monitorados e a estratégia do negócio.

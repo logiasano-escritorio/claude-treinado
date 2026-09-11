@@ -13,6 +13,7 @@ Consulte `~/.claude/AGENTS_CATALOG.md` para mapear tópico → agente/command co
 - Banco de dados, SQL → use `sql-pro` ou `postgres-pro`
 - Performance → use `performance-engineer`
 - Copy, anúncio, advertorial Relívia → use agentes do pipeline (01 a 10)
+- Subir/clonar/corrigir anúncio no Meta via API → use a skill `subir-campanha-meta`
 - Decisão estratégica → use `advisory-board:tasks:convene-board`
 - Para escolher o agente certo em qualquer outro caso → leia AGENTS_CATALOG.md
 
@@ -37,6 +38,11 @@ When the user types `/criativos-manchete`, invoke the Skill tool with `skill: "c
 # pipeline-nicho
 - **pipeline-nicho** (`~/.claude/skills/pipeline-nicho/SKILL.md`) - pipeline completo de 1 nicho ponta a ponta: raspa a Meta Ad Library dos concorrentes campeões → extrai long-forms + imagens → adapta todos pro produto Sano → gera imagens no padrão campeão → monta advertoriais → sobe campanha no Meta. Ex: `/pipeline-nicho melasma`, `/pipeline-nicho neuropatia`. Trigger: `/pipeline-nicho`
 When the user types `/pipeline-nicho`, invoke the Skill tool with `skill: "pipeline-nicho"` before doing anything else.
+
+# subir-campanha-meta
+- **subir-campanha-meta** (`~/.claude/skills/subir-campanha-meta/SKILL.md`) - sobe campanhas no Meta pela Marketing API v23.0, estrutura 1-1-1 ou CBO com bid cap. Publisher dirigido por manifesto, idempotente por nome de campanha, com upload de vídeo/imagem e o catálogo de erros da API com o fix validado. Trigger: `/subir-campanha-meta`
+When the user types `/subir-campanha-meta`, invoke the Skill tool with `skill: "subir-campanha-meta"` before doing anything else.
+**Antes de escrever qualquer código que chame a Graph API do Meta — subir, clonar, corrigir ou auditar anúncio — leia `~/.claude/skills/subir-campanha-meta/REFERENCIA-API-META.md`.** Metade dos erros dessa API tem mensagem enganosa; adivinhar campo já custou horas.
 
 # adaptar-longform
 - **adaptar-longform** (`~/.claude/skills/adaptar-longform/SKILL.md`) - pipeline completo de adaptação de long-form de concorrente estrangeiro: seleciona peça do benchmarking raspado da Meta Ad Library, adapta a copy (esqueleto do original + mecanismo Sano + 42 regras + português orgânico), salva como AD-NN no Obsidian com auditoria, gera imagens stop-scroll calibradas pelo avatar, varia ângulos e monta o inventário com ranking. Trigger: `/adaptar-longform`
