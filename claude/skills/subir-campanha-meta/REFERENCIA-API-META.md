@@ -444,3 +444,139 @@ linhas vai de 135 para 2.350 quando o filtro sai.
 10. Campanha nasce **PAUSED**. Conjunto e anúncio nascem ACTIVE, então ligar a
     operação é virar só a campanha.
 11. Ninguém mexendo na conta no gerenciador durante o run.
+
+---
+
+## 15. Aprendizados de novembro/2026
+
+Validado subindo lotes 1-1-N por Drive, estruturas ABO/CBO, e copiando campanhas
+inteiras entre contas por post existente. Sem IDs reais de conta/página/BM — este
+repo é público; use a tabela da seção 9 (já pública) quando precisar de um ID real.
+
+### Retry ampliado
+
+Os códigos que valem retry com backoff deixaram de ser só rate limit (`17`). A lista
+validada em produção, testada em milhares de chamadas de cópia de campanha:
+
+```python
+CODIGOS_TRANSIENTES = {1, 2, 4, 17, 32, 613, 80004}
+# + qualquer erro com "is_transient": true
+```
+
+`1`/`2`/`4` são erros internos genéricos da API que se resolvem sozinhos no retry.
+`613` é rate limit de um tipo de recurso específico (ex. `/adimages`). `80004` é rate
+limit de conta de anúncios combinado com volume de escrita.
+
+**Conta em dev tier trava por ~40 minutos** depois de algumas centenas de escritas
+seguidas (criação de campanha/conjunto/criativo/anúncio em sequência, nos lotes
+grandes de cópia). Não é um dos códigos acima — na prática a chamada começa a
+devolver timeout ou `is_transient`. O script espera e continua; não precisa intervir,
+só não interromper o processo.
+
+### Conjunto antigo sem `regional_regulation_identities`
+
+Ao copiar uma campanha antiga, alguns conjuntos não têm
+`regional_regulation_identities` salvo (foram criados antes da exigência de
+compliance BR, seção 3). Ler esse campo direto (`oas["regional_regulation_identities"]`
+sem `.get`) e sem fallback dá `KeyError` e derruba o lote inteiro — foi um bug real.
+
+O fix: `.get()` com fallback **vindo de fora do código**, nunca hardcoded. No
+`copiar_campanhas.py` isso é a flag `--pagador-regulacao <advertiser_id>`. Sem a flag
+e sem o campo na origem, o conjunto é pulado e registrado no relatório — nunca inventa
+um ID nem derruba o lote.
+
+### Erro 1885499 — sem permissão na página
+
+```
+error_code: 1885499
+"Sem permissão para o anunciante na Página"
+```
+
+A página do post não está liberada para o usuário/token na conta de **destino**
+(comum ao copiar entre Business Managers diferentes). Não é um erro de payload, é
+permissão: confira em `/act_<DESTINO>/promote_pages` e libere a página pro usuário que
+gerou o token. Não trava o lote — registre a página que falta no relatório final e
+siga para os próximos itens; o resto da cópia não depende dela.
+
+### Erro subcode 4841021 — conta não qualificada para gravação
+
+```
+error_subcode: 4841021
+"conta não qualificada para gravação"
+```
+
+A conta está com **pagamento pendente**. Nesse estado não é possível criar nem editar
+nem pausar nada ali — nem campanha, nem conjunto, nem status. Resolver o pagamento é
+pré-requisito, não tem contorno via API. Aborte o lote inteiro pra essa conta assim
+que esse erro aparecer (não adianta tentar os próximos itens, todos vão falhar igual)
+e avise quem gerencia o cartão/saldo.
+
+### Erro 1885940 — limite de conjuntos por campanha CBO
+
+```
+error_code: 1885940
+```
+
+A mensagem pode vir **em português** direto da API, não só em inglês — não dependa do
+texto da mensagem pra identificar, confira o código. Acontece perto de ~200 conjuntos
+numa única campanha CBO (o limite exato a Meta não documenta de forma estável). Fix:
+ao bater nesse erro criando um conjunto, abra uma campanha de continuação (mesmo nome
++ "(cont.)", mesma config de orçamento/lance) e continue criando os conjuntos
+restantes nela. Os dois scripts desta skill fazem isso automaticamente.
+
+Lembrete relacionado: **50 anúncios por conjunto** é limite duro da API (não some
+sozinho, dá erro de validação no POST do anúncio). Para `1-1-N`, o
+`anuncios_por_conjunto` do manifesto é validado contra esse teto antes de qualquer
+chamada de rede.
+
+### Vídeo de pasta pública do Google Drive, direto por `file_url`
+
+Não precisa baixar o vídeo local pra depois subir multipart. `POST /act_X/advideos`
+aceita `file_url` apontando pro endpoint de download direto do Drive:
+
+```
+https://drive.usercontent.google.com/download?id=<ID_DO_ARQUIVO>&export=download&confirm=t
+```
+
+O `confirm=t` evita a tela de "arquivo grande, confirmar download" que o Drive mostra
+sem esse parâmetro — sem ele, o Meta baixa a página HTML de confirmação em vez do
+vídeo, e o processamento falha silenciosamente até dar `video_status: error`.
+
+Listar os arquivos de uma pasta pública (sem OAuth, sem API key do Google) via
+`embeddedfolderview`:
+
+```python
+import re, html, urllib.request
+s = urllib.request.urlopen(f"https://drive.google.com/embeddedfolderview?id={pasta_id}#list").read().decode("utf-8", "replace")
+for m in re.finditer(r'<a href="([^"]+)"[^>]*>.*?flip-entry-title">([^<]+)<', s, re.S):
+    link, nome = m.group(1), html.unescape(m.group(2))
+    # "/folders/" no link = subpasta (recursão); senão, pegue o ID com re.search(r"/d/([^/]+)", link)
+```
+
+Esse regex é o validado em produção — `embeddedfolderview` não tem API formal, é HTML
+que pode mudar sem aviso. Se parar de casar, inspecione o HTML de novo antes de
+ajustar o regex.
+
+### Anúncio por post existente não precisa de `degrees_of_freedom_spec`
+
+Quando o criativo é criado com `object_story_id` (post que já existe) em vez de
+`object_story_spec` (criativo novo), **não envie** `degrees_of_freedom_spec`. O post
+já carrega a configuração que tinha quando foi publicado a primeira vez; reenviar o
+dof spec nesse fluxo não tem efeito documentado e nenhum dos lotes de cópia por post
+precisou disso. Só é obrigatório no fluxo de criativo novo (vídeo/imagem subindo
+agora).
+
+### ABO: `bid_strategy` e `bid_amount` moram no conjunto, não na campanha
+
+Em CBO (orçamento na campanha), `bid_strategy` fica na campanha e `bid_amount` em cada
+conjunto (seção 7). Em **ABO** (orçamento em cada conjunto), o espelho é completo:
+`bid_strategy` **e** `bid_amount` ficam os dois no conjunto, junto com o
+`daily_budget`/`lifetime_budget` dele. A campanha ABO não leva `bid_strategy` nenhum.
+
+### Orçamento total (lifetime) — não validado em run real
+
+`lifetime_budget` no lugar de `daily_budget`, com `end_time` no conjunto quando o
+orçamento mora lá (ABO) — esse é o campo documentado pela Meta para ad set. Para
+orçamento total **na campanha** (CBO/1-1-1/1-1-N) ainda não rodamos um lote real; se a
+API cobrar um campo adicional (ex. algo equivalente a `stop_time`), registre aqui o
+erro exato e o fix antes de generalizar.

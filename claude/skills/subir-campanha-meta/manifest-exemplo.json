@@ -1,18 +1,22 @@
 {
- "_leia": "Template do publisher. Troque TUDO que esta entre <>. Confirme pixel, page e advertiser_id na PROPRIA conta antes de rodar — ver secao 1 do SKILL.md.",
+ "_leia": "Template do publisher, estrutura 1-1-1. Troque TUDO que esta entre <>. Confirme pixel, page e advertiser_id na PROPRIA conta antes de rodar — ver secao 1 do SKILL.md.",
  "lote": "<slug-do-lote-2026-01-31>",
  "data": "<2026-01-31>",
  "produto": "<Nome do produto>",
  "account_id": "<act_0000000000000000>",
  "conta": "<nome da conta no gerenciador>",
- "estrutura": "1-1-1 (1 campanha por criativo)",
+ "estrutura": "1-1-1",
  "ad_status": "ACTIVE",
+ "orcamento": {
+  "tipo": "diario",
+  "valor": 3000,
+  "_nota": "centavos/dia. tipo=total exige 'fim' (ISO8601) — nao validado em producao ainda"
+ },
+ "lance": {
+  "estrategia": "menor_custo",
+  "_alt": "bid_cap ou cost_cap exigem 'valor' em centavos"
+ },
  "campanha": {
-  "objective": "OUTCOME_SALES",
-  "buying_type": "AUCTION",
-  "bid_strategy": "LOWEST_COST_WITHOUT_CAP",
-  "_bid_strategy_alt": "LOWEST_COST_WITH_BID_CAP — se usar, ponha bid_amount no adset",
-  "daily_budget_cents": 3000,
   "status": "PAUSED"
  },
  "adset": {
@@ -322,7 +326,7 @@
    "hook": "H2B1",
    "campaign_name": "<Produto - AD02 H2B1>",
    "image_path": "</caminho/absoluto/criativo-02.jpg>",
-   "_nota": "video_path OU image_path. Se um run morrer, cole aqui o video_id/image_hash do .resultado.json"
+   "_nota": "video_path OU image_path OU post_id. Se um run morrer, cole aqui o video_id/image_hash do .resultado.json"
   }
  ]
 }

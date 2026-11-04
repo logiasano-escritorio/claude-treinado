@@ -1,0 +1,346 @@
+{
+ "_leia": "Template ABO (orcamento no CONJUNTO, bid cap por conjunto/angulo). Cada conjunto compete com orcamento proprio.",
+ "lote": "<slug-do-lote-abo-2026-01-31>",
+ "produto": "<Nome do produto>",
+ "account_id": "<act_0000000000000000>",
+ "estrutura": "ABO",
+ "campanha_nome": "ABO - <Produto> - bid cap por angulo",
+ "ad_status": "ACTIVE",
+ "orcamento": {
+  "tipo": "diario",
+  "valor": 5000,
+  "_nota": "valor padrao por conjunto; cada conjunto pode sobrescrever com orcamento_valor_cents"
+ },
+ "lance": {
+  "estrategia": "bid_cap",
+  "valor": 2500,
+  "_nota": "valor padrao por conjunto; cada conjunto pode sobrescrever com bid_valor_cents"
+ },
+ "campanha": {
+  "status": "PAUSED"
+ },
+ "adset": {
+  "optimization_goal": "OFFSITE_CONVERSIONS",
+  "billing_event": "IMPRESSIONS",
+  "pixel_id": "<pixel DO PRODUTO>",
+  "custom_event_type": "PURCHASE",
+  "advertiser_id": "<ler de um adset ja no ar NESTA conta>",
+  "targeting": {
+   "age_min": 25,
+   "age_max": 65,
+   "geo_locations": {
+    "countries": [
+     "BR"
+    ],
+    "location_types": [
+     "home",
+     "recent"
+    ]
+   },
+   "targeting_automation": {
+    "advantage_audience": 1
+   },
+   "_nota": "advantage_audience=1 exige age_min <= 25 (subcode 1870188)",
+   "user_age_unknown": false
+  },
+  "attribution_spec": [
+   {
+    "event_type": "CLICK_THROUGH",
+    "window_days": 7
+   }
+  ],
+  "status": "ACTIVE"
+ },
+ "creative": {
+  "page_id": "<page liberada nesta conta>",
+  "instagram_user_id": "<ig_user_id ou null>",
+  "title": "<headline curta>",
+  "cta_type": "SHOP_NOW",
+  "link": "<https://exemplo.com/pagina-de-venda>",
+  "url_tags": "utm_source=facebook&utm_campaign={{campaign.name}}|{{campaign.id}}&utm_medium={{adset.name}}|{{adset.id}}&utm_content={{ad.name}}|{{ad.id}}&utm_term={{placement}}",
+  "description": "",
+  "message": "<corpo do anuncio>",
+  "degrees_of_freedom_spec": {
+   "creative_features_spec": {
+    "adapt_to_placement": {
+     "enroll_status": "OPT_OUT"
+    },
+    "add_text_overlay": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ads_with_benefits": {
+     "enroll_status": "OPT_OUT"
+    },
+    "advantage_plus_creative": {
+     "enroll_status": "OPT_OUT"
+    },
+    "app_highlights": {
+     "enroll_status": "OPT_OUT"
+    },
+    "audio": {
+     "enroll_status": "OPT_OUT"
+    },
+    "auto_promotion_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "biz_ai": {
+     "enroll_status": "OPT_OUT"
+    },
+    "carousel_to_video": {
+     "enroll_status": "OPT_OUT"
+    },
+    "catalog_feed_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "creative_stickers": {
+     "enroll_status": "OPT_OUT"
+    },
+    "customize_product_recommendation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "cv_transformation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "description_automation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "dha_optimization": {
+     "enroll_status": "OPT_OUT"
+    },
+    "dynamic_cta_text": {
+     "enroll_status": "OPT_OUT"
+    },
+    "dynamic_partner_content": {
+     "enroll_status": "OPT_OUT"
+    },
+    "enable_ncs_testimonials": {
+     "enroll_status": "OPT_OUT"
+    },
+    "enhance_cta": {
+     "enroll_status": "OPT_OUT"
+    },
+    "fb_feed_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "fb_reels_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "fb_story_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "feed_caption_optimization": {
+     "enroll_status": "OPT_OUT"
+    },
+    "generate_cta": {
+     "enroll_status": "OPT_OUT"
+    },
+    "hide_price": {
+     "enroll_status": "OPT_OUT"
+    },
+    "hyperlink_formatting": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ig_feed_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ig_glados_feed": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ig_reels_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ig_stream_tag": {
+     "enroll_status": "OPT_OUT"
+    },
+    "ig_video_native_subtitle": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_animation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_auto_crop": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_background_gen": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_banner": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_brightness_and_contrast": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_end_card": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_enhancement": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_templates": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_text_translation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_touchups": {
+     "enroll_status": "OPT_OUT"
+    },
+    "image_uncrop": {
+     "enroll_status": "OPT_OUT"
+    },
+    "inline_comment": {
+     "enroll_status": "OPT_IN"
+    },
+    "local_store_extension": {
+     "enroll_status": "OPT_OUT"
+    },
+    "media_liquidity_animated_image": {
+     "enroll_status": "OPT_OUT"
+    },
+    "media_order": {
+     "enroll_status": "OPT_OUT"
+    },
+    "media_type_automation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "multi_creative_post_carousel": {
+     "enroll_status": "OPT_OUT"
+    },
+    "multi_photo_to_video": {
+     "enroll_status": "OPT_OUT"
+    },
+    "music_generation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "pac_genai_recomposition": {
+     "enroll_status": "OPT_OUT"
+    },
+    "pac_relaxation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "product_browsing": {
+     "enroll_status": "OPT_OUT"
+    },
+    "product_extensions": {
+     "enroll_status": "OPT_OUT",
+     "customizations": {
+      "pe_carousel": {
+       "enroll_status": "OPT_OUT"
+      }
+     }
+    },
+    "product_metadata_automation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "product_tags": {
+     "enroll_status": "OPT_OUT"
+    },
+    "profile_card": {
+     "enroll_status": "OPT_OUT"
+    },
+    "profile_extension": {
+     "enroll_status": "OPT_OUT"
+    },
+    "replace_media_text": {
+     "enroll_status": "OPT_OUT"
+    },
+    "reveal_details_over_time": {
+     "enroll_status": "OPT_OUT"
+    },
+    "show_destination_blurbs": {
+     "enroll_status": "OPT_OUT"
+    },
+    "show_summary": {
+     "enroll_status": "OPT_OUT"
+    },
+    "site_extensions": {
+     "enroll_status": "OPT_OUT"
+    },
+    "standard_enhancements_catalog": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_extraction_for_headline": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_extraction_for_tap_target": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_formatting_optimization": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_generation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_optimizations": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_overlay_translation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "text_translation": {
+     "enroll_status": "OPT_OUT"
+    },
+    "translate_voiceover": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_auto_crop": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_filtering": {
+     "enroll_status": "OPT_IN"
+    },
+    "video_highlight": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_highlights": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_to_image": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_uncrop": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_uncrop_9x16_to_9x18": {
+     "enroll_status": "OPT_OUT"
+    },
+    "video_voiceover": {
+     "enroll_status": "OPT_OUT"
+    },
+    "wa_mm_image_filtering": {
+     "enroll_status": "OPT_OUT"
+    },
+    "wa_mm_text_truncation_length": {
+     "enroll_status": "OPT_OUT"
+    }
+   }
+  }
+ },
+ "conjuntos": [
+  {
+   "nome": "CJ01 - Angulo dor lombar",
+   "bid_valor_cents": 2200,
+   "ads": [
+    {
+     "nome": "lombar-v01",
+     "video_path": "</caminho/absoluto/lombar-v01.mp4>"
+    },
+    {
+     "nome": "lombar-v02",
+     "video_path": "</caminho/absoluto/lombar-v02.mp4>"
+    }
+   ]
+  },
+  {
+   "nome": "CJ02 - Angulo neuropatia",
+   "orcamento_valor_cents": 8000,
+   "bid_valor_cents": 2800,
+   "ads": [
+    {
+     "nome": "neuro-v01",
+     "video_path": "</caminho/absoluto/neuro-v01.mp4>"
+    }
+   ]
+  }
+ ]
+}
